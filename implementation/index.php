@@ -47,7 +47,7 @@
 
         <main class="px-3">
             <h1 class=" text-white">Let's get started!</h1>
-            <p class="lead  text-white">We're glad that you chose to eat at our restaurant. We hope you have a plesant experience. Please enter your table number & click on the button below to start ordering food.</p>
+            <p class="lead  text-white">We're glad that you chose to eat at our restaurant. We hope you have a pleasant experience. Please enter your table number & click on the button below to start ordering food.</p>
             <p class="lead">
             <div class="container w-50">
                 <form method="POST" action="home.php">

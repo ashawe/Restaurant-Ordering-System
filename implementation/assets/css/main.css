@@ -1,0 +1,47 @@
+.item-img {
+    width: 100px;
+    height: 100px;
+}
+
+.menu-item-container {
+    justify-content: space-between;
+}
+
+.right-part {
+    display: flex;
+    flex-direction: column;
+    max-width: 120px;
+    width: 100%;
+}
+
+.menu-item-container, .left-part {
+    display: flex;
+    flex-direction: row;
+}
+
+.item-description .title {
+    font-size: 25px;
+    margin: 0;
+}
+
+.cost {
+    font-size: 25px;
+    text-align: center;
+}
+
+.item-description .body{
+    font-size: 20px;
+    margin: 0;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
