@@ -1,11 +1,13 @@
-// var startSessionModal = document.getElementById('startSessionModal');
-// var ssModalInput = document.getElementById('ssModalInput');
-
-// startSessionModal.addEventListener('shown.bs.modal', function () {
-//     ssModalInput.focus()
-// });
-
-// $('.collapse').collapse()
+// disable mousewheel on a input number field when in focus
+// (to prevent Cromium browsers change the value when scrolling)
+$('form').on('focus', 'input[type=number]', function (e) {
+    $(this).on('wheel.disableScroll', function (e) {
+      e.preventDefault()
+    })
+  })
+  $('form').on('blur', 'input[type=number]', function (e) {
+    $(this).off('wheel.disableScroll')
+  })
 
 $('.btn-minuse').on('click', function () {
     var MIN = 1;
