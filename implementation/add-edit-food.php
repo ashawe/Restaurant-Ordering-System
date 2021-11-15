@@ -30,18 +30,28 @@
                                 Food
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item text-white" href="add-food.php">Add Food</a></li>
+                                <li><a class="dropdown-item text-white" href="add-edit-food.php">Add Food</a></li>
                                 <li><a class="dropdown-item text-white" href="manage-food.php">Manage Food</a></li>
                             </ul>
                         </li>
                     </ul>
-                    <a class="nav-link text-white" aria-current="page" href="add-chef.php">Add Chef</a>
+                    <ul class="navbar-nav mx-2">
+                        <li class="nav-item dropdown text-white">
+                            <a class="text-white nav-link active dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Chef
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item text-white" href="add-chef.php">Add Chef</a></li>
+                                <li><a class="dropdown-item text-white" href="manage-chef.php">Manage Chef</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </header>
 
         <main class="py-3 text-white">
-            <h1 class="my-5 text-center">Add Food!</h1>
+            <h1 class="my-5 text-center">Add / Edit Food!</h1>
             <div class="container">
                 <div class="row" style="gap:25px">
                     <form enctype="multipart/form-data" method="POST">
@@ -62,6 +72,7 @@
                             <label for="food-price" class="form-label">Food Price</label>
                             <input type="number" class="form-control" id="food-price">
                         </div>
+                        <!-- @ToDo : Redirect Back to Manage Page if come from there. -->
                         <button type="submit" class="btn btn-primary">Add Food Item</button>
                     </form>
                 </div>
