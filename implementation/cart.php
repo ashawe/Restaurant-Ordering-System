@@ -26,7 +26,7 @@
                         <input type="search" name="q" class="form-control" placeholder="Search..." aria-label="Search">
                     </form>
                     <a class="nav-link active text-white" aria-current="page" href="home.php">Order</a>
-                    <a class="nav-link active text-white" aria-current="page" href="cart.php">Cart</a>
+                    <a class="nav-link active text-white" aria-current="page" href="cart.php">Cart / View Order</a>
                 </nav>
             </div>
         </header>
