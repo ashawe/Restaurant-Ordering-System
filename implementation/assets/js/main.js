@@ -92,7 +92,8 @@ $('.btn-order-next').on('click', function () {
         default:
             if (confirm("Are you sure?")) {
                 $(this).parent().parent().parent().parent().remove();
-                generateToast("accepted" + ran(), "Order Marked as Completed", "success");
+                generateToast("accepted" + ran(), $(this).html() === "Remove" ? "Order Removed" : "Order Marked as Completed", "success");
             }
     }
 });
+

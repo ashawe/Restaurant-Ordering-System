@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="right-part align-self-center">
-                                    <button class="btn btn-danger w-100" type="button" data-toggle="on">Remove</button>
+                                    <button class="btn btn-danger w-100 btn-order-next" type="button" data-toggle="on">Remove</button>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                                 <div class="right-part align-self-center">
-                                    <button class="btn btn-danger w-100" type="button" data-toggle="on">Remove</button>
+                                    <button class="btn btn-danger w-100 btn-order-next" type="button" data-toggle="on">Remove</button>
                                 </div>
                             </div>
                         </div>
@@ -73,9 +73,8 @@
             </div>
         </main>
 
-        <footer class="mt-auto text-white-50" style="position: relative;">
+        <footer class="mt-auto text-white-50" style="position: fixed;">
             <div class="toast-container">
-
             </div>
         </footer>
     </div>
