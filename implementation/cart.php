@@ -129,7 +129,7 @@
             </div>
         </main>
 
-        <footer class="mt-auto text-white-50">
+        <footer class="mt-auto text-white-50" style="position: absolute;">
             <div class="toast-container">
 
             </div>
