@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 
-<body class="d-flex h-100 bg-dark">
+<body class="d-flex bg-dark">
 
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
@@ -74,6 +74,56 @@
                                 <button class="btn btn-primary" type="button" id="btn-checkout">Checkout!</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <h1 class="my-5 text-white text-center">Previous Orders</h1>
+            <div class="container">
+                <div class="row" style="gap:25px">
+                    <table class="table text-white">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row">1</td>
+                                <td>Veg Pizza</td>
+                                <td>2</td>
+                                <td>$5</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">2</td>
+                                <td>Peperonni Pizza</td>
+                                <td>1</td>
+                                <td>$15</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <th colspan="2">Total</th>
+                                <th>$25</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="align-items-center text-white bg-success border-0">
+                            <div class="d-flex justify-content-center">
+                                <div class="toast-body">
+                                    <h4>Order Status: Completed</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <a href="rate.php">
+                            <button class="btn btn-primary w-100 h-100" type="button" id="btn-rate">Click here to Rate and Review!</button>
+                        </a>
                     </div>
                 </div>
             </div>
