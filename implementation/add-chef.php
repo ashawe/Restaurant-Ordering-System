@@ -20,7 +20,7 @@
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div class="">
-                <h3 class="float-md-start mb-0 text-white">Restaurant Ordering System</h3>
+                <a href="index.php"><h3 class="float-md-start mb-0 text-white">Restaurant Ordering System</h3></a>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link text-white" aria-current="page" href="view-suggestions.php">Manage Ratings / Reviews</a>
                     <ul class="navbar-nav mx-3">
