@@ -54,26 +54,13 @@
             <h1 class="my-5 text-center">Add Chef!</h1>
             <div class="container">
                 <div class="row" style="gap:25px">
-                    <form enctype="multipart/form-data" method="POST">
+                    <form method="POST">
                         <div class="mb-3">
-                            <label for="food-name" class="form-label">Food Name</label>
+                            <label for="food-name" class="form-label">Chef's Email Address</label>
                             <input type="text" class="form-control" id="food-name">
+                            <div id="food-name-help" class="form-text">Enter chef's email id for login. A secure one time password will be generated for them. On their first login, they can choose a different password.</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="food-description" class="form-label">Description</label>
-                            <textarea class="form-control" name="food-description" id="food-description" cols="30" rows="10"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="food-img" class="form-label">Food Image</label>
-                            <input type="file" class="form-control" id="food-img" aria-describedby="img-help">
-                            <div id="img-help" class="form-text">Upload square images.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="food-price" class="form-label">Food Price</label>
-                            <input type="number" class="form-control" id="food-price">
-                        </div>
-                        <!-- @ToDo : Redirect Back to Manage Page if come from there. -->
-                        <button type="submit" class="btn btn-primary">Add Food Item</button>
+                        <button type="submit" class="btn btn-primary">Add Chef</button>
                     </form>
                 </div>
             </div>
