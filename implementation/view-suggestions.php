@@ -30,77 +30,73 @@
         </header>
 
         <main class="py-3">
-            <h1 class="my-5 text-white text-center">Rate & Review</h1>
+            <h1 class="my-5 text-white text-center">Suggestions</h1>
             <div class="container">
-                <form action="POST">
-                    <div class="row" style="gap:25px">
-                        <div class="card">
-                            <div class="card-body">
-                                <h3>Overall Suggestion</h3>
-                                <div class="form-floating my-2">
-                                    <textarea class="form-control" placeholder="Leave a comment here" id="overall-review" style="height: 100px"></textarea>
-                                    <label for="floatingTextarea2">Write suggestion for entire order (optional)</label>
+                <div class="row" style="gap:25px">
+                    <h3 class="text-white">Order #1</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Overall Suggestion</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro quia explicabo tenetur id obcaecati voluptas numquam nisi dolorum minus totam cum quaerat veniam, sint maxime quos quae eum vero! Dolorum.</p>
+                            <button class="btn btn-danger" type="button">Delete Suggestion</button>
+                            <h3>Item-wise Review</h3>
+                            <div class="menu-item-container">
+                                <div class="left-part w-100">
+                                    <img class="item-img" src="assets/img/pizz.jpg" alt="">
+                                    <div class="item-description px-5 w-100">
+                                        <p class="title">Veg Pizza</p>
+                                        <p class="body">2/5</p>
+                                        <p></p>
+                                        <button class="btn btn-danger" type="button">Delete Item Review</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <h3 class="text-center text-white">Food Item Review</h3>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="menu-item-container">
-                                    <div class="left-part w-100">
-                                        <img class="item-img" src="assets/img/pizz.jpg" alt="">
-                                        <div class="item-description px-5 w-100">
-                                            <p class="title">Veg Pizza</p>
-                                            <div class="form-floating my-2">
-                                                <select class="form-select" id="rate-item-1" aria-label="Floating label select example">
-                                                    <option selected>Choose a rating</option>
-                                                    <option value="1">One / Five</option>
-                                                    <option value="2">Two / Five</option>
-                                                    <option value="3">Three / Five</option>
-                                                    <option value="4">Four / Five</option>
-                                                    <option value="5">Five / Five</option>
-                                                </select>
-                                                <label for="rate-item-1">Rating</label>
-                                            </div>
-                                            <div class="form-floating my-2">
-                                                <textarea class="form-control" placeholder="Leave a comment here" id="review-item1" style="height: 100px"></textarea>
-                                                <label for="review-item1">Write a Review (optional)</label>
-                                            </div>
-                                        </div>
+                            <div class="menu-item-container mt-3">
+                                <div class="left-part w-100">
+                                    <img class="item-img" src="assets/img/pizz.jpg" alt="">
+                                    <div class="item-description px-5 w-100">
+                                        <p class="title">Pepperoni Pizza</p>
+                                        <p class="body">2/5</p>
+                                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque quis sit incidunt, dolorum modi praesentium enim, architecto dolore magni beatae distinctio repudiandae ex quo cupiditate iste ipsum quod sunt possimus.</p>
+                                        <!-- @ToDo : Show button only to admin -->
+                                        <button class="btn btn-danger" type="button">Delete Item Review</button> 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="menu-item-container">
-                                    <div class="left-part w-100">
-                                        <img class="item-img" src="assets/img/pizz.jpg" alt="">
-                                        <div class="item-description px-5 w-100">
-                                            <p class="title">Pepperoni Pizza</p>
-                                            <div class="form-floating my-2">
-                                                <select class="form-select" id="rate-item-2" aria-label="Floating label select example">
-                                                    <option selected>Choose a rating</option>
-                                                    <option value="1">One / Five</option>
-                                                    <option value="2">Two / Five</option>
-                                                    <option value="3">Three / Five</option>
-                                                    <option value="4">Four / Five</option>
-                                                    <option value="5">Five / Five</option>
-                                                </select>
-                                                <label for="rate-item-2">Rating</label>
-                                            </div>
-                                            <div class="form-floating my-2">
-                                                <textarea class="form-control" placeholder="Leave a comment here" id="review-item-2" style="height: 100px"></textarea>
-                                                <label for="review-item-2">Write a Review (optional)</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary w-100" type="button" data-toggle="on">Submit Review</button>
                     </div>
-                </form>
+                    <h3 class="text-white">Order #4</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Overall Suggestion</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro quia explicabo tenetur id obcaecati voluptas numquam nisi dolorum minus totam cum quaerat veniam, sint maxime quos quae eum vero! Dolorum.</p>
+                            <button class="btn btn-danger" type="button">Delete Suggestion</button>
+                            <h3>Item-wise Review</h3>
+                            <div class="menu-item-container">
+                                <div class="left-part w-100">
+                                    <img class="item-img" src="assets/img/pizz.jpg" alt="">
+                                    <div class="item-description px-5 w-100">
+                                        <p class="title">Veg Pizza</p>
+                                        <p class="body">2/5</p>
+                                        <p></p>
+                                        <button class="btn btn-danger" type="button">Delete Item Review</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="menu-item-container mt-3">
+                                <div class="left-part w-100">
+                                    <img class="item-img" src="assets/img/pizz.jpg" alt="">
+                                    <div class="item-description px-5 w-100">
+                                        <p class="title">Pepperoni Pizza</p>
+                                        <p class="body">2/5</p>
+                                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque quis sit incidunt, dolorum modi praesentium enim, architecto dolore magni beatae distinctio repudiandae ex quo cupiditate iste ipsum quod sunt possimus.</p>
+                                        <button class="btn btn-danger" type="button">Delete Item Review</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
 
