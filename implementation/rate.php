@@ -106,7 +106,7 @@
             </div>
         </main>
 
-        <footer class="mt-auto text-white-50" style="position: absolute;">
+        <footer class="mt-auto text-white-50" style="position: relative;">
             <div class="toast-container">
 
             </div>

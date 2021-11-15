@@ -19,7 +19,7 @@
 
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
-            <div class="h-100">
+            <div class="">
                 <h3 class="float-md-start mb-0 text-white">Restaurant Ordering System</h3>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <form method="GET" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -32,32 +32,39 @@
         </header>
 
         <main class="py-3">
-            <h1 class="my-5 text-white text-center">Veg Pizza</h1>
+            <h1 class="my-5 text-white text-center">Completed Orders!</h1>
             <div class="container">
-                <div class="row" style="gap:25px">
+                <div id="completed-order-container" class="row mt-5" style="gap:25px">
+                    <h1 class="text-white">Completed Orders</h1>
                     <div class="card">
-                        <div class="card-body p-5">
+                        <div class="card-body">
+                            <p class="muted">Table 3</p>
                             <div class="menu-item-container">
                                 <div class="left-part">
-                                    <img class="item-img-big" src="assets/img/pizz.jpg" alt="">
-                                </div>
-                                <div class="mx-5">
                                     <div class="item-description">
-                                        <p class="title">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto tempore obcaecati nam culpa eum vitae accusantium saepe est odio sunt fugiat corporis beatae itaque ad, esse laborum iusto quas id.</p>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <h3 class="mt-3" style="display: inline-block;">Price: $5</h3>
-                                            </div>
-                                            <div class="col-6 align-self-center mt-3">
-                                                <button class="btn btn-primary cart-add w-100" type="button" data-toggle="on">Add to Cart</button>
-                                                <div class="btn-group d-none cart-qty" role="group" aria-label="Basic example">
-                                                    <span><button class="btn btn-dark btn-minuse" type="button">-</button></span>
-                                                    <input type="text" class="form-control no-padding text-center height-25" maxlength="3" value="1">
-                                                    <span><button class="btn btn-dark btn-pluss" type="button">+</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <p class="title">Veg Pizza x 2</p>
+                                        <p class="title">Peperonni Pizza x 1</p>
                                     </div>
+                                </div>
+                                <div class="right-part align-self-center">
+                                    <button class="btn btn-danger w-100" type="button" data-toggle="on">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="muted">Table 3</p>
+                            <div class="menu-item-container">
+                                <div class="left-part">
+                                    <div class="item-description">
+                                        <p class="title">Veg Burger x 1</p>
+                                        <p class="title">Cheese Burger x 1</p>
+                                        <p class="title">Peperonni Pizza x 1</p>
+                                    </div>
+                                </div>
+                                <div class="right-part align-self-center">
+                                    <button class="btn btn-danger w-100" type="button" data-toggle="on">Remove</button>
                                 </div>
                             </div>
                         </div>
