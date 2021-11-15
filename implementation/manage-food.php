@@ -24,7 +24,7 @@
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link text-white" aria-current="page" href="#">Dashboard</a>
                     <a class="nav-link text-white" aria-current="page" href="view-suggestions.php">Manage Ratings / Reviews</a>
-                    <ul class="navbar-nav mx-2">
+                    <ul class="navbar-nav mx-3">
                         <li class="nav-item dropdown text-white">
                             <a class="text-white nav-link active dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Food
@@ -35,9 +35,9 @@
                             </ul>
                         </li>
                     </ul>
-                    <ul class="navbar-nav mx-2">
+                    <ul class="navbar-nav mx-3">
                         <li class="nav-item dropdown text-white">
-                            <a class="text-white nav-link active dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="text-white nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Chef
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
