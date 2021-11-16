@@ -1,6 +1,7 @@
 <?php
 
     require 'db/db-connect.php';
+    require 'db/debug-functions.php';
     require 'db/admin-db-functions.php';
     session_start();
 
@@ -27,7 +28,10 @@
         $PRINT_MSG = "ERR";
         $err = true;
     }
-
+    
+    if( isset($_COOKIE['cart']) )
+        $cart = json_decode(stripslashes($_COOKIE['cart']),true);
+    
 ?>
 
 <!DOCTYPE html>
@@ -86,11 +90,11 @@
                                         <p class="cost text-center">$<?= $row['price']?></p>
                                     </div>
                                     <div class="item-cart">
-                                        <button class="btn btn-primary cart-add w-100" type="button" data-toggle="on">Add to Cart</button>
-                                        <div class="btn-group d-none cart-qty" role="group" aria-label="Basic example">
-                                            <span><button class="btn btn-dark btn-minuse" type="button">-</button></span>
-                                            <input type="text" class="form-control no-padding text-center height-25" maxlength="3" value="1">
-                                            <span><button class="btn btn-dark btn-pluss" type="button">+</button></span>
+                                        <button id="<?= $row['food_id']?>" class="btn btn-primary <?= !isset($cart) || !isset($cart[$row['food_id']]) ? "" : "d-none" ?> cart-add w-100" type="button" data-toggle="on">Add to Cart</button>
+                                        <div class="btn-group <?= isset($cart) && isset($cart[$row['food_id']]) ? "" : "d-none" ?> cart-qty" role="group" aria-label="Basic example">
+                                            <span><button id="<?= $row['food_id']?>" class="btn btn-dark btn-minuse" type="button">-</button></span>
+                                            <input type="text" class="form-control no-padding text-center height-25" maxlength="3" value="<?= isset($cart) && isset($cart[$row['food_id']]) ? $cart[$row['food_id']] : "1" ?>">
+                                            <span><button id="<?= $row['food_id']?>" class="btn btn-dark btn-pluss" type="button">+</button></span>
                                         </div>
                                     </div>
                                 </div>
