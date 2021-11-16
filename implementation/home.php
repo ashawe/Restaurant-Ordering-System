@@ -1,3 +1,26 @@
+<?php
+
+    require 'db/db-connect.php';
+    session_start();
+
+    $is_logged_in = false;
+
+    // if table number is in not session 
+    if( isset($_POST['table-number']) )
+    {
+        $_SESSION['table-number'] = $_POST['table-number'];
+        $is_logged_in = true;
+    }
+    if(isset($_SESSION['table-number']))
+        $is_logged_in = true;
+    
+    if(!$is_logged_in)
+        header("Location: index.php?prompt=please provide a table number");
+    
+    
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
