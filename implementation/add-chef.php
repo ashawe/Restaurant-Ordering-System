@@ -82,6 +82,7 @@
                             </ul>
                         </li>
                     </ul>
+                    <a class="nav-link text-white" aria-current="page" href="logout.php">logout</a>
                 </nav>
             </div>
         </header>
