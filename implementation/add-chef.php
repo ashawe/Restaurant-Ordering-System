@@ -83,7 +83,7 @@
                         <button type="submit" class="btn btn-primary">Add Chef</button>
                     </form>
                 </div>
-                <div class="row <?= isset($_POST['chef-mail']) || $SUCCESS ? "" : "d-none" ?>">
+                <div class="row <?= isset($_POST['chef-mail']) && $SUCCESS ? "" : "d-none" ?>">
                     <p class="muted">Give these credentials to the chef for login. They will need to reset password upon first login.</p>
                     <h3>Chef Mail: <?= isset($_POST['chef-mail']) || $SUCCESS ? $_POST['chef-mail'] : "" ?> </h3>
                     <h3>Chef Password: <?= isset($_POST['chef-mail']) || $SUCCESS ? $ret : "" ?> </h3>
@@ -93,26 +93,20 @@
 
         <footer class="mt-auto text-white-50" style="position: fixed;">
             <div class="toast-container">
-                <div id="success-failure-toast" class="toast align-items-center text-white bg-<?= $SUCCESS ? "success" : "danger"?> border-0" data-bs-delay="2000" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <?php 
-                                if($SUCCESS)
-                                    echo "Chef Added Successfully";
-                                else
-                                    echo "There was some error adding chef. Check logs.";
-                            ?>
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>
             </div>
         </footer>
     </div>
 
     <script src="assets/js/main.js"></script>
     <script>
-        <?= isset($_POST['chef-mail']) || $SUCCESS ? "$( document ).ready(function(){\$('#success-failure-toast').toast('show');});" : "" ?>
+        <?php 
+            if(isset($_POST['chef-mail']) || $SUCCESS ) {
+                if($SUCCESS)
+                    echo "$( document ).ready(function(){ generateToast('success-failure-toast','Chef Added Successfully','success');});";
+                else
+                    echo "$( document ).ready(function(){ generateToast('success-failure-toast','There was some error adding chef. Check logs.','danger');});";
+            } 
+        ?>
     </script>
 </body>
 
