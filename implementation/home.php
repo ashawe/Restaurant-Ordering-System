@@ -1,9 +1,11 @@
 <?php
 
     require 'db/db-connect.php';
+    require 'db/admin-db-functions.php';
     session_start();
 
     $is_logged_in = false;
+    $err = false;
 
     // if table number is in not session 
     if( isset($_POST['table-number']) )
@@ -17,7 +19,14 @@
     if(!$is_logged_in)
         header("Location: index.php?prompt=please provide a table number");
     
-    
+    // fetch food from db
+    $foodArray = getFood();
+
+    if( $foodArray == NULL)
+    {
+        $PRINT_MSG = "ERR";
+        $err = true;
+    }
 
 ?>
 
@@ -58,19 +67,23 @@
             <h1 class="my-5 text-white text-center">Our Menu!</h1>
             <div class="container">
                 <div class="row" style="gap:25px">
+                <?php
+                    while($row = mysqli_fetch_assoc($foodArray))
+                    {
+                ?>
                     <div class="card">
                         <div class="card-body">
                             <div class="menu-item-container">
                                 <div class="left-part">
-                                    <img class="item-img" src="assets/img/pizz.jpg" alt="">
+                                    <img class="item-img" src="assets/img/<?= $row['photo'];?>" alt="">
                                     <div class="item-description px-5">
-                                        <p class="title">Veg Pizza</p>
-                                        <p class="body">Onion, Tomato, Capsicum</p>
+                                        <p class="title"><?= $row['name']?></p>
+                                        <p class="body"><?= $row['description']?></p>
                                     </div>
                                 </div>
                                 <div class="right-part">
                                     <div class="item-cost">
-                                        <p class="cost text-center">$5</p>
+                                        <p class="cost text-center">$<?= $row['price']?></p>
                                     </div>
                                     <div class="item-cart">
                                         <button class="btn btn-primary cart-add w-100" type="button" data-toggle="on">Add to Cart</button>
@@ -84,32 +97,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <img class="item-img" src="assets/img/pizz.jpg" alt="">
-                                    <div class="item-description px-5">
-                                        <p class="title">Peperonni Pizza</p>
-                                        <p class="body">Onion, Tomato, Capsicum, Pepperoni</p>
-                                    </div>
-                                </div>
-                                <div class="right-part">
-                                    <div class="item-cost">
-                                        <p class="cost text-center">$15</p>
-                                    </div>
-                                    <div class="item-cart">
-                                        <button class="btn btn-primary cart-add w-100" type="button" data-toggle="on">Add to Cart</button>
-                                        <div class="btn-group d-none cart-qty" role="group" aria-label="Basic example">
-                                            <span><button class="btn btn-dark btn-minuse" type="button">-</button></span>
-                                            <input type="text" class="form-control no-padding text-center height-25" maxlength="3" value="1">
-                                            <span><button class="btn btn-dark btn-pluss" type="button">+</button></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <?php
+                    }
+                ?>
                 </div>
             </div>
         </main>
