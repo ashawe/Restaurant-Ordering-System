@@ -6,7 +6,7 @@ CREATE TABLE `users` (
 );
 
 CREATE TABLE `orders` (
-    order_id INT(15) NOT NULL PRIMARY KEY,
+    order_id INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     order_status VARCHAR(50) NOT NULL,
     phone_number VARCHAR(50) NOT NULL,
     suggestion VARCHAR(500),
@@ -14,7 +14,7 @@ CREATE TABLE `orders` (
 );
 
 CREATE TABLE `food` (
-    food_id INT(15) NOT NULL PRIMARY KEY,
+    food_id INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     price FLOAT(10) NOT NULL,
     photo VARCHAR(255),
@@ -22,7 +22,7 @@ CREATE TABLE `food` (
 );
 
 CREATE TABLE `order_mapping` (
-    mapping_id INT(15) NOT NULL PRIMARY KEY,
+    mapping_id INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     order_id INT(15) NOT NULL,
     food_id INT(15) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
@@ -30,7 +30,7 @@ CREATE TABLE `order_mapping` (
 );
 
 CREATE TABLE `ratings` (
-    rating_id INT(15) NOT NULL PRIMARY KEY,
+    rating_id INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     food_id INT(15) NOT NULL,
     rating INT(1) NOT NULL,
     review VARCHAR(255),
@@ -38,7 +38,7 @@ CREATE TABLE `ratings` (
 );
 
 CREATE TABLE `logs` (
-    log_id INT(15) NOT NULL PRIMARY KEY,
+    log_id INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     description VARCHAR(2000) NOT NULL,
     time TIMESTAMP DEFAULT now()
 );

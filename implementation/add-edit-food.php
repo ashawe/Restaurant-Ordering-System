@@ -1,3 +1,107 @@
+<?php
+    require_once 'db/db-connect.php';
+    require 'db/debug-functions.php'; // @ToDO remove
+    require 'db/admin-db-functions.php';
+    
+    $SUCCESS = false;
+
+    session_start();
+
+    // check if user has access to this page.
+    if( !isset($_SESSION['role']) || $_SESSION['role'] != "ADMIN")
+    {
+        header('Location: login.php?prompt=please+login+as+admin+to+continue');
+    }
+
+    // var_dump($_POST);
+
+    // Check if image file is a actual image or fake image
+    if( isset($_POST["food-name"]) && isset($_POST["food-description"]) && isset($_FILES["food-img"]) && isset($_POST["food-price"]) ) {
+        $target_dir = "assets/img/";
+        $target_file = $target_dir . basename($_FILES["food-img"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        $check = getimagesize($_FILES["food-img"]["tmp_name"]);
+        if($check !== false) {
+            // echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } else {
+            $PRINT_MSG = "File is not an image.";
+            $uploadOk = 0;
+        }
+
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            // echo "Sorry, file already exists.";
+            $prefix = substr(str_shuffle(MD5(microtime())), 0, 5);
+            $target_file = $target_dir . $prefix . basename($_FILES["food-img"]["name"]);
+            // $uploadOk = 0;
+        }
+        
+        // Check file size
+        if ($_FILES["food-img"]["size"] > 500000) {
+            $PRINT_MSG = "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+        
+        // Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" ) {
+            $PRINT_MSG =  "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+        
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            $PRINT_MSG =  "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["food-img"]["tmp_name"], $target_file)) {
+             $PRINT_MSG = "The file has been uploaded.";
+             $uploadOk = 1;
+            } else {
+                $PRINT_MSG = "Sorry, there was an error uploading your file.";
+                $uploadOk = 0;
+            }
+        }
+
+        // if file uploaded
+        if($uploadOk == 1) {
+
+            // sanitize
+            $name = mysqli_real_escape_string($conn, $_POST['food-name']);
+            $price = mysqli_real_escape_string($conn, $_POST['food-price']);
+            $photo = $target_file;
+            $descript = mysqli_real_escape_string($conn, $_POST['food-description']);
+            
+            // insert in db
+            $insertQry = 'INSERT INTO food (name, price, photo, description) VALUES (?,?,?,?)';
+ 
+            $insertStatement = mysqli_prepare($conn,$insertQry);
+            
+            mysqli_stmt_bind_param($insertStatement,'sdss',$name, $price, $photo, $descript);
+            
+            $ret = mysqli_stmt_execute($insertStatement);
+            
+            if ($ret) {
+                $PRINT_MSG =  "Food Added Successfully";
+                $SUCCESS = true;
+            } else {
+                // @ToDo : Write to log
+                $PRINT_MSG = "There was some error. Please try again later";
+                writeC("Error: ". $ret . mysqli_error($conn));
+                $SUCCESS = false;
+            }
+
+        }
+    }
+    else {
+        if( isset($_POST['submit']))
+            $PRINT_MSG = "Please provide every input.";
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,21 +160,22 @@
                     <form enctype="multipart/form-data" method="POST">
                         <div class="mb-3">
                             <label for="food-name" class="form-label">Food Name</label>
-                            <input type="text" class="form-control" id="food-name">
+                            <input type="text" class="form-control" id="food-name" name="food-name" required>
                         </div>
                         <div class="mb-3">
                             <label for="food-description" class="form-label">Description</label>
-                            <textarea class="form-control" name="food-description" id="food-description" cols="30" rows="10"></textarea>
+                            <textarea class="form-control" name="food-description" id="food-description" cols="30" rows="10" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="food-img" class="form-label">Food Image</label>
-                            <input type="file" class="form-control" id="food-img" aria-describedby="img-help">
+                            <input type="file" class="form-control" id="food-img" aria-describedby="img-help" name="food-img" required>
                             <div id="img-help" class="form-text">Upload square images.</div>
                         </div>
                         <div class="mb-3">
                             <label for="food-price" class="form-label">Food Price</label>
-                            <input type="number" class="form-control" id="food-price">
+                            <input type="number" step="0.01" class="form-control" id="food-price" name="food-price" required>
                         </div>
+                        <input type="hidden" name="submit" value="submit">
                         <!-- @ToDo : Redirect Back to Manage Page if come from there. -->
                         <button type="submit" class="btn btn-primary">Add Food Item</button>
                     </form>
@@ -86,6 +191,16 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+        <?php 
+            if(isset($PRINT_MSG)) {
+                if($SUCCESS == true)
+                    echo "$( document ).ready(function(){ generateToast('file-upload-toast','" . $PRINT_MSG . "','success');});";
+                else
+                    echo "$( document ).ready(function(){ generateToast('file-upload-toast','" . $PRINT_MSG . "','danger');});";
+            } 
+        ?>
+    </script>
 </body>
 
 </html>
