@@ -43,7 +43,9 @@
                     // display toast
                     break;
             }
-
+            
+            if( isset($_GET['ref']) )
+                $newURL = $_GET['ref'];
             header('Location: '.$newURL);
         }
         else $PRINT_STATUS = "Error logging in. Check username / password.";
