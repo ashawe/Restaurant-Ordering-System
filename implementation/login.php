@@ -1,3 +1,41 @@
+<?php
+    require_once 'db/db-connect.php';
+    require 'db/debug-functions.php'; // @ToDO remove
+    require 'db/db-functions.php';
+    
+    $SUCCESS = false;
+    $PRINT_STATUS = "EMPTY";
+
+    // @ToDo : check if user is logged in as admin
+    if( isset($_POST['username']) && isset($_POST['password']) )
+    {
+        $uname = $_POST['username'];
+        $pwd = $_POST['password'];
+        
+        writeC($uname);
+        writeC($pwd);
+
+        $ret = checkLogin($uname,$pwd);
+
+        if($ret!=NULL)
+        {
+            switch( $ret[0] ) {
+                case "ADMIN": 
+                    writeC("Logged in as admin");
+                    break;
+                case "CHEF":
+                    writeC("Logged in as chef");
+                    break;
+                default:
+                    writeC("default");
+                    break;
+            }
+        }
+        else $PRINT_STATUS = "Error logging in. Check username / password.";
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
@@ -9,6 +47,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/main.css">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="assets/js/main.js"></script>
 
@@ -48,7 +87,7 @@
         <main class="px-3">
             <h1 class="my-5 text-white">Login Page</h1>
             <div class="container w-50">
-                <form method="POST" action="home.php">
+                <form method="POST">
                     <div class="form-floating mb-3">
                         <input name="username" type="text" class="form-control rounded-4" id="username" placeholder="username" required>
                         <label for="username">Username</label>

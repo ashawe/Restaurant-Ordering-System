@@ -11,7 +11,7 @@
     if ($result->num_rows > 0) {
     // output data of each row
         while($row = $result->fetch_assoc()) {
-            echo "email_id: " . $row["email_id"]. " - password: " . $row["password"]. " role= " . $row["role"]. "<br>";
+            echo "email_id: " . $row["email_id"]. " - password: " . $row["password"]. " role= " . $row["role"] . " fl= " . $row["first_login"] . "<br>" ;
         }
     } else {
         echo "0 results";

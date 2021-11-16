@@ -1,6 +1,6 @@
 <?php
 
-// require 'db-connect.php';
+// assumes db connection
 // require 'validator.php';
 
 function addChef($email) {
