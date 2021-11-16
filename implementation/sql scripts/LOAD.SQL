@@ -1,5 +1,5 @@
 -- user table
--- INSERT INTO users('admin@mail.com',);
+INSERT INTO `users` VALUES('admin@mail.com','$2y$10$dNYVtiJjuJxSUHZDp.LNCuYhGEfM.Mtv2WH4g.sAJXYh5CZcjGYOy','ADMIN',false);
 
 
 -- food table

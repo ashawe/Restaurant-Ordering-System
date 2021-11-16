@@ -2,8 +2,7 @@ CREATE TABLE `users` (
     email_id VARCHAR(100) NOT NULL PRIMARY KEY,
     password VARCHAR(512) NOT NULL,
     role VARCHAR(10) NOT NULL,
-    first_login BOOLEAN NOT NULL,
-    salt VARCHAR(15) NOT NULL
+    first_login BOOLEAN NOT NULL
 );
 
 CREATE TABLE `orders` (

@@ -1,3 +1,22 @@
+<?php
+    require_once 'db/db-connect.php';
+    require 'db/debug-functions.php'; // @ToDO remove
+    require 'db/admin-db-functions.php';
+    
+    $SUCCESS = false;
+
+    // @ToDo : check if user is logged in as admin
+    if(isset($_POST['chef-mail']))
+    {
+        $chefMail = $_POST['chef-mail'];
+        writeC($chefMail);
+        $ret = addChef($chefMail);
+        if($ret!=NULL)
+            $SUCCESS = true;
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +37,7 @@
 <body class="d-flex h-100 bg-dark">
     <!-- @ToDo: Fix "active" link in navbar -->
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
+        <header>
             <div class="">
                 <a href="index.php"><h3 class="float-md-start mb-0 text-white">Restaurant Ordering System</h3></a>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
@@ -56,7 +75,7 @@
                     <form method="POST">
                         <div class="mb-3">
                             <label for="food-name" class="form-label">Chef's Email Address</label>
-                            <input type="text" class="form-control" id="food-name">
+                            <input type="email" class="form-control" id="food-name" name="chef-mail">
                             <div id="food-name-help" class="form-text">Enter chef's email id for login. A secure one time password will be generated for them. On their first login, they can choose a different password.</div>
                         </div>
                         <button type="submit" class="btn btn-primary">Add Chef</button>
@@ -67,12 +86,27 @@
 
         <footer class="mt-auto text-white-50" style="position: fixed;">
             <div class="toast-container">
-
+                <div id="success-failure-toast" class="toast align-items-center text-white bg-<?= $SUCCESS ? "success" : "danger"?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <?php 
+                                if($SUCCESS)
+                                    echo "Chef Added Successfully";
+                                else
+                                    echo "There was some error adding chef. Check logs.";
+                            ?>
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+        <?= isset($_POST['chef-mail']) || $SUCCESS ? "$( document ).ready(function(){\$('#success-failure-toast').toast('show');});" : "" ?>
+    </script>
 </body>
 
 </html>
