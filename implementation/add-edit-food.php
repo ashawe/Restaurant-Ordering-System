@@ -10,7 +10,7 @@
     // check if user has access to this page.
     if( !isset($_SESSION['role']) || $_SESSION['role'] != "ADMIN")
     {
-        header('Location: login.php?prompt=please+login+as+admin+to+continue');
+        header('Location: login.php?prompt=please+login+as+admin+to+continue&ref=add-edit-food.php');
     }
 
     // var_dump($_POST);

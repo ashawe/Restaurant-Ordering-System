@@ -23,6 +23,7 @@
         {
             $SUCCESS = true;
             session_start();
+            session_regenerate_id(true); 
             switch( $ret[0] ) {
                 case "ADMIN": 
                     writeC("Logged in as admin");
