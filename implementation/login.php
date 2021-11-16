@@ -20,26 +20,29 @@
         if($ret!=NULL)
         {
             $SUCCESS = true;
+            session_start();
             switch( $ret[0] ) {
                 case "ADMIN": 
                     writeC("Logged in as admin");
                     // set session as ADMIN
-
+                    $_SESSION["role"] = "ADMIN";
                     // redirect to viewing managing chefs
-
+                    $newURL = "add-chef.php";
                     break;
                 case "CHEF":
                     writeC("Logged in as chef");
                     // set session as CHEF
-
+                    $_SESSION["role"] = "CHEF";
                     // redirect to viewing orders
-
+                    $newURL = "view-orders.php";
                     break;
                 default:
                     writeC("default");
                     // display toast
                     break;
             }
+
+            header('Location: '.$newURL);
         }
         else $PRINT_STATUS = "Error logging in. Check username / password.";
     }
@@ -85,7 +88,7 @@
 <body class="d-flex h-100 text-center bg-dark">
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
+        <header>
             <div>
                 <a href="index.php"><h3 class="float-md-start mb-0 text-white">Restaurant Ordering System</h3></a>
                 <nav class="nav nav-masthead justify-content-center float-md-end">

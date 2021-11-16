@@ -4,6 +4,9 @@
     require 'db/db-connect.php';
     // echo substr(str_shuffle(MD5(microtime())), 0, 15);
     // echo password_hash("admin@1321", PASSWORD_DEFAULT); $2y$10$dNYVtiJjuJxSUHZDp.LNCuYhGEfM.Mtv2WH4g.sAJXYh5CZcjGYOy
+    // Chef Mail: mew@c.com
+    // Chef Password: afac16bfd1e2fed 
+    echo $_SERVER['HTTP_REFERER'];
 
     $sql = "SELECT * FROM users";
     $result = $conn->query($sql);
