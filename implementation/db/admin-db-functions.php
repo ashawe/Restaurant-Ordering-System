@@ -3,19 +3,6 @@
 // assumes db connection
 // require 'validator.php';
 
-function getFood() {
-    Global $conn;
-
-    $sql = "SELECT * FROM `food`";
-    $result = mysqli_query($conn, $sql);
-
-    if (mysqli_num_rows($result) > 0) {
-      return $result;
-    } else {
-        return NULL;
-    }
-}
-
 function addChef($email) {
     
     Global $conn;
