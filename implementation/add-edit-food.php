@@ -72,7 +72,7 @@
             // sanitize
             $name = mysqli_real_escape_string($conn, $_POST['food-name']);
             $price = mysqli_real_escape_string($conn, $_POST['food-price']);
-            $photo = $target_file;
+            $photo = explode('/',$target_file)[2];
             $descript = mysqli_real_escape_string($conn, $_POST['food-description']);
             
             // insert in db
