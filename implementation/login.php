@@ -19,15 +19,25 @@
 
         if($ret!=NULL)
         {
+            $SUCCESS = true;
             switch( $ret[0] ) {
                 case "ADMIN": 
                     writeC("Logged in as admin");
+                    // set session as ADMIN
+
+                    // redirect to viewing managing chefs
+
                     break;
                 case "CHEF":
                     writeC("Logged in as chef");
+                    // set session as CHEF
+
+                    // redirect to viewing orders
+
                     break;
                 default:
                     writeC("default");
+                    // display toast
                     break;
             }
         }
@@ -103,10 +113,20 @@
             </div>
         </main>
 
-        <footer class="mt-auto text-white-50">
+        <footer class="mt-auto text-white-50" style="position: fixed;">
+            <div class="toast-container">
+            </div>
         </footer>
     </div>
 
+    <script src="assets/js/main.js"></script>
+    <script>
+        <?php 
+            if((isset($_POST['username']) && isset($_POST['password'])) && !$SUCCESS) {
+                echo "$( document ).ready(function(){ generateToast('success-failure-toast','" . $PRINT_STATUS . "','danger')});";
+            } 
+        ?>
+    </script>
 
 </body>
 

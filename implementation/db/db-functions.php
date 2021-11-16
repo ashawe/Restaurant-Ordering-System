@@ -22,7 +22,7 @@ function checkLogin($email, $password) {
     if(!isset($getData['password']) || !password_verify($password,$getData['password']))
     {
         // wrong username or password
-        return -1;
+        return NULL;
     }
 
     return [$getData['role'],$getData['first_login']];
