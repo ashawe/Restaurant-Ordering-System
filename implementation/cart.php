@@ -1,3 +1,39 @@
+<?php
+
+    require 'db/db-connect.php';
+    require 'db/debug-functions.php';
+    require 'db/admin-db-functions.php';
+    session_start();
+
+    $is_logged_in = false;
+    $err = false;
+
+    // if table number is in not session 
+    if( isset($_POST['table-number']) )
+    {
+        $_SESSION['table-number'] = $_POST['table-number'];
+        $is_logged_in = true;
+    }
+    if(isset($_SESSION['table-number']))
+        $is_logged_in = true;
+    
+    if(!$is_logged_in)
+        header("Location: index.php?prompt=please provide a table number");
+    
+    // fetch food from db
+    $foodArray = getFood();
+
+    if( $foodArray == NULL)
+    {
+        $PRINT_MSG = "ERR";
+        $err = true;
+    }
+    
+    if( isset($_COOKIE['cart']) )
+        $cart = json_decode(stripslashes($_COOKIE['cart']),true);
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
@@ -25,7 +61,7 @@
                     <form method="GET" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                         <input type="search" name="q" class="form-control" placeholder="Search..." aria-label="Search">
                     </form>
-                    <a class="nav-link active text-white" aria-current="page" href="home.php">Order</a>
+                    <a class="nav-link text-white" aria-current="page" href="home.php">Order</a>
                     <a class="nav-link active text-white" aria-current="page" href="cart.php">Cart / View Order</a>
                 </nav>
             </div>
@@ -42,25 +78,37 @@
                                 <th scope="col">Item Name</th>
                                 <th scope="col">Qty</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Combined Price</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                                $total = 0;
+                                if(!$err)
+                                    while($row = mysqli_fetch_assoc($foodArray))
+                                    {
+                                        if(isset($cart[$row['food_id']]))
+                                        {
+                                            $total = $total + $row['price'] * $cart[$row['food_id']];
+                            ?>
                             <tr>
-                                <td scope="row">1</td>
-                                <td>Veg Pizza</td>
-                                <td>2</td>
-                                <td>$5</td>
+                                <td scope="row"> <?=$row['food_id']?> </td>
+                                <td><?=$row['name']?></td>
+                                <td><?=$cart[$row['food_id']]?></td>
+                                <td>$<?= $row['price'] ?></td>
+                                <td>$<?= $row['price'] * $cart[$row['food_id']] ?></td>
                             </tr>
-                            <tr>
-                                <td scope="row">2</td>
-                                <td>Peperonni Pizza</td>
-                                <td>1</td>
-                                <td>$15</td>
-                            </tr>
+                            <?php
+                                    }
+                                }
+                                else {
+
+                                }
+                            ?>
                             <tr>
                                 <th scope="row"></th>
-                                <th colspan="2">Total</th>
-                                <th>$25</th>
+                                <th colspan="3">Total</th>
+                                <th>$<?=$total?></th>
                             </tr>
                         </tbody>
                     </table>
