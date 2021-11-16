@@ -2,11 +2,13 @@
     require_once 'db/db-connect.php';
     require 'db/debug-functions.php'; // @ToDO remove
     require 'db/db-functions.php';
-    
+
+    if(isset($_GET['prompt']))
+        $REDIRECT_MSG = $_GET['prompt'];
+
     $SUCCESS = false;
     $PRINT_STATUS = "EMPTY";
 
-    // @ToDo : check if user is logged in as admin
     if( isset($_POST['username']) && isset($_POST['password']) )
     {
         $uname = $_POST['username'];
@@ -127,7 +129,9 @@
         <?php 
             if((isset($_POST['username']) && isset($_POST['password'])) && !$SUCCESS) {
                 echo "$( document ).ready(function(){ generateToast('success-failure-toast','" . $PRINT_STATUS . "','danger')});";
-            } 
+            }
+            if( isset($REDIRECT_MSG) )
+                echo "$( document ).ready(function(){ generateToast('redirect-toast','" . $REDIRECT_MSG . "','danger')});";
         ?>
     </script>
 

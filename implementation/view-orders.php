@@ -1,3 +1,25 @@
+<?php
+
+    require 'db/debug-functions.php';
+    session_start();
+
+    // check if login redirected the user => show toast
+    if( isset($_SERVER['HTTP_REFERER']) )
+    {
+        $PATH_REFFERER = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
+        if($PATH_REFFERER == "/ENPM809WProject-hsaglani/implementation/login.php")
+            $PRINT_MSG = "Welcome Chef";
+    }
+
+    // check if user has access to this page.
+    if( !isset($_SESSION['role']))
+    {
+        header('Location: login.php?prompt=please+login+to+continue');
+    }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -151,6 +173,13 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+        <?php 
+            if(isset($PRINT_MSG)) {
+                echo "$( document ).ready(function(){ generateToast('login-toast','Welcome Chef.','success');});";
+            } 
+        ?>
+    </script>
 </body>
 
 </html>
