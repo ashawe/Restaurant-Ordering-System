@@ -72,6 +72,7 @@
             <div class="container">
                 <div class="row" style="gap:25px">
                 <?php
+                    if(!$err)
                     while($row = mysqli_fetch_assoc($foodArray))
                     {
                 ?>
@@ -102,6 +103,10 @@
                         </div>
                     </div>
                 <?php
+                    }
+                    else {
+                        if( isset($err) )
+                            echo "$( document ).ready(function(){ generateToast('no-data-toast','" . $err . "','danger')});";
                     }
                 ?>
                 </div>
