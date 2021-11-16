@@ -7,6 +7,22 @@
     $PWD = "";
 
     // @ToDo : check if user is logged in as admin
+    session_start();
+
+    // check if login redirected the user => show toast
+    if( isset($_SERVER['HTTP_REFERER']) )
+    {
+        $PATH_REFFERER = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
+        if($PATH_REFFERER == "/ENPM809WProject-hsaglani/implementation/login.php")
+            $PRINT_MSG = "Welcome Admin";
+    }
+
+    // check if user has access to this page.
+    if( !isset($_SESSION['role']) || $_SESSION['role'] != "ADMIN")
+    {
+        header('Location: login.php?prompt=please+login+as+admin+to+continue');
+    }
+
     if(isset($_POST['chef-mail']))
     {
         $chefMail = $_POST['chef-mail'];
@@ -105,6 +121,11 @@
                     echo "$( document ).ready(function(){ generateToast('success-failure-toast','Chef Added Successfully','success');});";
                 else
                     echo "$( document ).ready(function(){ generateToast('success-failure-toast','There was some error adding chef. Check logs.','danger');});";
+            } 
+        ?>
+        <?php 
+            if(isset($PRINT_MSG)) {
+                echo "$( document ).ready(function(){ generateToast('login-toast','Welcome Admin!.','success');});";
             } 
         ?>
     </script>
