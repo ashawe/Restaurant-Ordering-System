@@ -86,7 +86,7 @@
 
         <footer class="mt-auto text-white-50" style="position: fixed;">
             <div class="toast-container">
-                <div id="success-failure-toast" class="toast align-items-center text-white bg-<?= $SUCCESS ? "success" : "danger"?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div id="success-failure-toast" class="toast align-items-center text-white bg-<?= $SUCCESS ? "success" : "danger"?> border-0" data-bs-delay="2000" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="d-flex">
                         <div class="toast-body">
                             <?php 
