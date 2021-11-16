@@ -4,6 +4,7 @@
     require 'db/admin-db-functions.php';
     
     $SUCCESS = false;
+    $PWD = "";
 
     // @ToDo : check if user is logged in as admin
     if(isset($_POST['chef-mail']))
@@ -11,6 +12,7 @@
         $chefMail = $_POST['chef-mail'];
         writeC($chefMail);
         $ret = addChef($chefMail);
+        $PWD = $ret;
         if($ret!=NULL)
             $SUCCESS = true;
     }
@@ -80,6 +82,11 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Add Chef</button>
                     </form>
+                </div>
+                <div class="row <?= isset($_POST['chef-mail']) || $SUCCESS ? "" : "d-none" ?>">
+                    <p class="muted">Give these credentials to the chef for login. They will need to reset password upon first login.</p>
+                    <h3>Chef Mail: <?= isset($_POST['chef-mail']) || $SUCCESS ? $_POST['chef-mail'] : "" ?> </h3>
+                    <h3>Chef Password: <?= isset($_POST['chef-mail']) || $SUCCESS ? $ret : "" ?> </h3>
                 </div>
             </div>
         </main>
