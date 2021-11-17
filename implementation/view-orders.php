@@ -1,6 +1,8 @@
 <?php
 
+    require 'db/db-connect.php';
     require 'db/debug-functions.php';
+    require 'db/db-functions.php';
     session_start();
 
     // check if login redirected the user => show toast
@@ -53,116 +55,126 @@
 
         <main class="py-3">
             <h1 class="my-5 text-white text-center">Ongoing Orders!</h1>
-            <div class="container">
-                <div id="new-order-container" class="row" style="gap:25px">
-                    <h1 class="text-white">New Orders:</h1>
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="muted">Table 3</p>
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description">
-                                        <p class="title">Veg Pizza x 2</p>
-                                        <p class="title">Peperonni Pizza x 1</p>
+            <?php
+                $ordersArr = viewOrders();
+                $newOrders = $ordersArr[0];
+                $acceptedOrders = $ordersArr[1];
+                $preparingOrders = $ordersArr[2];
+            ?>
+                <div class="container">
+                    <div id="new-order-container" class="row" style="gap:25px">
+                        <h1 class="text-white">New Orders:</h1>
+                        <?php
+                            $currentID = "";
+                            // if not empty
+                            if($newOrders!=NULL)
+                                while($row = mysqli_fetch_assoc($newOrders))
+                                {
+                                    $currentID = $row['order_id'];
+                        ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p class="muted">Table <?=$row['table_number']?></p>
+                                            <div class="menu-item-container">
+                                                <div class="left-part">
+                                                    <div class="item-description">
+                                                        <?php
+                                                            while($currentID == $row['order_id']) 
+                                                            {
+                                                        ?>
+                                                                <p class="title"><?=$row['name']?> x <?=$row['quantity']?></p>
+                                                        <?php
+                                                                $row = mysqli_fetch_assoc($newOrders);
+                                                            }
+                                                        ?>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="right-part align-self-center">
+                                                    <button id="<?=$currentID?>" class="btn btn-warning text-dark w-100 btn-order-next" type="button" data-toggle="on">Mark as Accepted</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="right-part align-self-center">
-                                    <button class="btn btn-warning text-dark w-100 btn-order-next" type="button" data-toggle="on">Mark as Accepted</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                                }
+                        ?>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="muted">Table 3</p>
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description">
-                                        <p class="title">Veg Burger x 1</p>
-                                        <p class="title">Cheese Burger x 1</p>
-                                        <p class="title">Peperonni Pizza x 1</p>
+                    <div id="accepted-order-container" class="row mt-5" style="gap:25px">
+                        <h1 class="text-white">Accepted Orders:</h1>
+                        <?php
+                            $currentID = "";
+                            // if not empty
+                            if($acceptedOrders!=NULL)
+                                while($row = mysqli_fetch_assoc($acceptedOrders))
+                                {
+                                    $currentID = $row['order_id'];
+                        ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p class="muted">Table <?=$row['table_number']?></p>
+                                            <div class="menu-item-container">
+                                                <div class="left-part">
+                                                    <div class="item-description">
+                                                        <?php
+                                                            while($currentID == $row['order_id']) 
+                                                            {
+                                                        ?>
+                                                                <p class="title"><?=$row['name']?> x <?=$row['quantity']?></p>
+                                                        <?php
+                                                                $row = mysqli_fetch_assoc($acceptedOrders);
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                                <div class="right-part align-self-center">
+                                                    <button id="<?=$currentID?>" class="btn btn-primary w-100 btn-order-next" type="button" data-toggle="on">Mark as Preparing</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="right-part align-self-center">
-                                    <button class="btn btn-warning text-dark w-100 btn-order-next" type="button" data-toggle="on">Mark as Accepted</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                                }
+                        ?>
+                    </div>
+                    <div id="preparing-order-container" class="row mt-5" style="gap:25px">
+                        <h1 class="text-white">Currently Preparing Orders:</h1>
+                        <?php
+                            $currentID = "";
+                            // if not empty
+                            if($preparingOrders!=NULL)
+                                while($row = mysqli_fetch_assoc($preparingOrders))
+                                {
+                                    $currentID = $row['order_id'];
+                        ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p class="muted">Table <?=$row['table_number']?></p>
+                                            <div class="menu-item-container">
+                                                <div class="left-part">
+                                                    <div class="item-description">
+                                                        <?php
+                                                            while($currentID == $row['order_id']) 
+                                                            {
+                                                        ?>
+                                                                <p class="title"><?=$row['name']?> x <?=$row['quantity']?></p>
+                                                        <?php
+                                                                $row = mysqli_fetch_assoc($preparingOrders);
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                                <div class="right-part align-self-center">
+                                                    <button id="<?=$currentID?>" class="btn btn-success w-100 btn-order-next" type="button" data-toggle="on">Mark as Completed</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        <?php
+                                }
+                        ?>
                     </div>
                 </div>
-                <div id="accepted-order-container" class="row mt-5" style="gap:25px">
-                    <h1 class="text-white">Accepted Orders:</h1>
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="muted">Table 3</p>
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description">
-                                        <p class="title">Veg Pizza x 2</p>
-                                        <p class="title">Peperonni Pizza x 1</p>
-                                    </div>
-                                </div>
-                                <div class="right-part align-self-center">
-                                    <button class="btn btn-primary w-100 btn-order-next" type="button" data-toggle="on">Mark as Preparing</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="muted">Table 3</p>
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description">
-                                        <p class="title">Veg Burger x 1</p>
-                                        <p class="title">Cheese Burger x 1</p>
-                                        <p class="title">Peperonni Pizza x 1</p>
-                                    </div>
-                                </div>
-                                <div class="right-part align-self-center">
-                                    <button class="btn btn-primary w-100 btn-order-next" type="button" data-toggle="on">Mark as Preparing</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="preparing-order-container" class="row mt-5" style="gap:25px">
-                    <h1 class="text-white">Currently Preparing Orders:</h1>
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="muted">Table 3</p>
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description">
-                                        <p class="title">Veg Pizza x 2</p>
-                                        <p class="title">Peperonni Pizza x 1</p>
-                                    </div>
-                                </div>
-                                <div class="right-part align-self-center">
-                                    <button class="btn btn-success w-100 btn-order-next" type="button" data-toggle="on">Mark as Completed</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="muted">Table 3</p>
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description">
-                                        <p class="title">Veg Burger x 1</p>
-                                        <p class="title">Cheese Burger x 1</p>
-                                        <p class="title">Peperonni Pizza x 1</p>
-                                    </div>
-                                </div>
-                                <div class="right-part align-self-center">
-                                    <button class="btn btn-success w-100 btn-order-next" type="button" data-toggle="on">Mark as Completed</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
 
         <footer class="mt-auto text-white-50" style="position: fixed;">

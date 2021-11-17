@@ -13,6 +13,39 @@ function getOrder($order_id,$table_number) {
     return $result;
 }
 
+function viewOrders() {
+    Global $conn;
+
+    $sql = "select mapping_id,orders.order_id,order_status,table_number,food.name,order_mapping.quantity from order_mapping,orders,food where order_mapping.order_id = orders.order_id and food.food_id = order_mapping.food_id and orders.order_status = 'PLACED' ORDER BY orders.order_id";
+    $userStatement = mysqli_prepare($conn, $sql);
+    // mysqli_stmt_bind_param($userStatement, 'ii',$order_id, $table_number);
+    mysqli_stmt_execute($userStatement);
+    $resultPlaced = mysqli_stmt_get_result($userStatement);
+
+    if(mysqli_num_rows($resultPlaced) == 0)
+        $resultPlaced = NULL;
+    
+    $sql1 = "select mapping_id,orders.order_id,order_status,table_number,food.name,order_mapping.quantity from order_mapping,orders,food where order_mapping.order_id = orders.order_id and food.food_id = order_mapping.food_id and orders.order_status = 'ACCEPTED' ORDER BY orders.order_id";
+    $userStatement1 = mysqli_prepare($conn, $sql1);
+    // mysqli_stmt_bind_param($userStatement1, 'ii',$order_id, $table_number);
+    mysqli_stmt_execute($userStatement1);
+    $resultAccepted = mysqli_stmt_get_result($userStatement1);
+
+    if(mysqli_num_rows($resultAccepted) == 0)
+        $resultAccepted = NULL;
+
+    $sql2 = "select mapping_id,orders.order_id,order_status,table_number,food.name,order_mapping.quantity from order_mapping,orders,food where order_mapping.order_id = orders.order_id and food.food_id = order_mapping.food_id and orders.order_status = 'PREPARING' ORDER BY orders.order_id";
+    $userStatement2 = mysqli_prepare($conn, $sql2);
+    // mysqli_stmt_bind_param($userStatement2, 'ii',$order_id, $table_number);
+    mysqli_stmt_execute($userStatement2);
+    $resultPreparing = mysqli_stmt_get_result($userStatement2);
+
+    if(mysqli_num_rows($resultPreparing) == 0)
+        $resultPreparing = NULL;
+
+    return [$resultPlaced, $resultAccepted, $resultPreparing];
+}
+
 function getFood() {
     Global $conn;
 
