@@ -68,7 +68,9 @@
                             $currentID = "";
                             // if not empty
                             if($newOrders!=NULL)
-                                while($row = mysqli_fetch_assoc($newOrders))
+                            {
+                                $row = mysqli_fetch_assoc($newOrders);
+                                while($row)
                                 {
                                     $currentID = $row['order_id'];
                         ?>
@@ -98,6 +100,7 @@
                                     </div>
                         <?php
                                 }
+                            }
                         ?>
                     </div>
                     <div id="accepted-order-container" class="row mt-5" style="gap:25px">
@@ -106,7 +109,9 @@
                             $currentID = "";
                             // if not empty
                             if($acceptedOrders!=NULL)
-                                while($row = mysqli_fetch_assoc($acceptedOrders))
+                            {
+                                $row = mysqli_fetch_assoc($acceptedOrders);
+                                while($row)
                                 {
                                     $currentID = $row['order_id'];
                         ?>
@@ -135,6 +140,7 @@
                                     </div>
                         <?php
                                 }
+                            }
                         ?>
                     </div>
                     <div id="preparing-order-container" class="row mt-5" style="gap:25px">
@@ -143,7 +149,9 @@
                             $currentID = "";
                             // if not empty
                             if($preparingOrders!=NULL)
-                                while($row = mysqli_fetch_assoc($preparingOrders))
+                            {
+                                $row = mysqli_fetch_assoc($preparingOrders);
+                                while($row)
                                 {
                                     $currentID = $row['order_id'];
                         ?>
@@ -172,6 +180,7 @@
                                     </div>
                         <?php
                                 }
+                            }
                         ?>
                     </div>
                 </div>

@@ -121,7 +121,20 @@ $('.btn-order-next').on('click', function () {
             // move to accepted
             var card = $(this).parent().parent().parent().parent();
             $('#accepted-order-container').append(card);
-            generateToast("accepted" + ran(), "Order Marked as Accepted", "warning");
+
+            // send req to db to update 
+            $.post("api-change-status.php", {order_id: $(this).attr('id'), new_status: "ACCEPTED"}, function(result){
+                console.log(result);
+                if(result == 1)
+                {
+                    generateToast("accepted" + ran(), "Order Marked as Accepted", "warning");
+                }
+                else if(result == "Error.")
+                {
+                    generateToast("accepted-fail" + ran(), "Could not mark order as Accepted", "danger");
+                    window.location.href("view-orders.php");
+                }
+            });
             break;
 
         case "Preparing":
@@ -135,13 +148,44 @@ $('.btn-order-next').on('click', function () {
             // move to accepted
             var card = $(this).parent().parent().parent().parent();
             $('#preparing-order-container').append(card);
-            generateToast("accepted" + ran(), "Order Marked as Preparing", "primary");
+            
+            // send req to db to update 
+            $.post("api-change-status.php", {order_id: $(this).attr('id'), new_status: "PREPARING"}, function(result){
+                console.log(result);
+                if(result == 1)
+                {
+                    generateToast("accepted" + ran(), "Order Marked as Preparing", "primary");
+                }
+                else if(result == "Error.")
+                {
+                    generateToast("accepted-fail" + ran(), "Could not mark order as Accepted", "danger");
+                    window.location.href("view-orders.php");
+                }
+            });
             break;
 
         default:
             if (confirm("Are you sure?")) {
                 $(this).parent().parent().parent().parent().remove();
-                generateToast("accepted" + ran(), $(this).html() === "Remove" ? "Order Removed" : "Order Marked as Completed", "success");
+                
+                // if from view completed orders page
+                if( $(this).html() === "Remove" )
+                    generateToast("accepted" + ran(), "Order Removed", "success");
+                else {
+                    // send req to db to update 
+                    $.post("api-change-status.php", {order_id: $(this).attr('id'), new_status: "COMPLETED"}, function(result){
+                        console.log(result);
+                        if(result == 1)
+                        {
+                            generateToast("accepted" + ran(), "Order Marked as Completed", "success");
+                        }
+                        else if(result == "Error.")
+                        {
+                            generateToast("accepted-fail" + ran(), "Could not mark order as Completed", "danger");
+                            window.location.href("view-orders.php");
+                        }
+                    });
+                }
             }
     }
 });
