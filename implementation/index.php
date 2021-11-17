@@ -59,7 +59,7 @@ if(isset($_GET['prompt']))
             <div class="container w-50">
                 <form method="POST" action="home.php">
                     <div class="form-floating mb-3">
-                        <input name="table-number" type="text" class="form-control rounded-4" id="floatingInput" placeholder="for ex: 14" required>
+                        <input name="table_number" type="text" class="form-control rounded-4" id="floatingInput" placeholder="for ex: 14" required>
                         <label for="floatingInput">Table Number</label>
                     </div>
                     <button type="submit" class="btn w-100 btn-primary btn-large">

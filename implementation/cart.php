@@ -8,13 +8,15 @@
     $is_logged_in = false;
     $err = false;
 
+    $SUCCESS = false;
+
     // if table number is in not session 
-    if( isset($_POST['table-number']) )
+    if( isset($_POST['table_number']) )
     {
-        $_SESSION['table-number'] = $_POST['table-number'];
+        $_SESSION['table_number'] = $_POST['table_number'];
         $is_logged_in = true;
     }
-    if(isset($_SESSION['table-number']))
+    if(isset($_SESSION['table_number']))
         $is_logged_in = true;
     
     if(!$is_logged_in)
@@ -32,8 +34,40 @@
     if( isset($_COOKIE['cart']) )
         $cart = json_decode(stripslashes($_COOKIE['cart']),true);
 
-    if( isset($_POST) ) {
-        // if( isset($_POST['phone-number']), )   
+    if( isset($_POST['submit']) ) {
+        if( isset($_POST['phone-number']) && is_numeric($_POST['phone-number']) && strlen((string)$_POST['phone-number']) == 10 )
+        {
+            if( isset($cart) )
+            {
+                $tempFoodArr = $foodArray;
+                $foodIdsArr = array();
+                while($row = mysqli_fetch_assoc($tempFoodArr))
+                {
+                    if(isset($cart[$row['food_id']]))
+                        array_push($foodIdsArr,$row['food_id']);
+                }
+                // insert in db
+                $order_id = checkout($foodIdsArr,$_POST['phone-number'],$_SESSION['table_number']);
+                if($order_id == NULL) {
+                    $SUCCESS = false;
+                    $PRINT_MSG = "ERROR checking out.";
+                }
+                else {
+                    $SUCCESS = true;
+                    $PRINT_MSG = "Order Placed Successfully";
+                    // delete cart cookie and add order id cookie
+                    
+                    if(isset($_COOKIE['cart']))
+                        unset($_COOKIE['cart']); 
+                    setcookie('cart', null, -1, '/');
+                    setcookie('order_id',$order_id);
+                }
+            }
+            else 
+                $PRINT_MSG = "No item in cart.";
+        }
+        else
+            $PRINT_MSG = "Invalid Phone number.";
     }
     
 ?>
@@ -128,7 +162,7 @@
                             <div class="input-group my-5">
                                 <input type="number" class="form-control" placeholder="Phone Number" name="phone-number" aria-label="Phone Number" required>
                                 <input type="hidden" name="submit">
-                                <button class="btn btn-primary" type="button" id="btn-checkout">Checkout!</button>
+                                <button class="btn btn-primary" type="submit" id="btn-checkout">Checkout!</button>
                             </div>
                         </form>
                         <?php
@@ -197,6 +231,19 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+        <?php
+            if(isset($_POST['submit']))
+            {
+                if(isset($SUCCESS) && $SUCCESS == false) {
+                    echo "$( document ).ready(function(){ generateToast('failure-toast','" . $PRINT_MSG . "','danger')});";
+                }
+                else {
+                    echo "$( document ).ready(function(){ generateToast('success-toast','" . $PRINT_MSG . "','success')});";
+                }
+            }
+        ?>
+    </script>
 </body>
 
 </html>

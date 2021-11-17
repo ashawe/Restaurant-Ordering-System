@@ -10,12 +10,12 @@
     $err = false;
 
     // if table number is in not session 
-    if( isset($_POST['table-number']) )
+    if( isset($_POST['table_number']) )
     {
-        $_SESSION['table-number'] = $_POST['table-number'];
+        $_SESSION['table_number'] = $_POST['table_number'];
         $is_logged_in = true;
     }
-    if(isset($_SESSION['table-number']))
+    if(isset($_SESSION['table_number']))
         $is_logged_in = true;
     
     if(!$is_logged_in)

@@ -10,7 +10,8 @@ CREATE TABLE `orders` (
     order_status VARCHAR(50) NOT NULL,
     phone_number VARCHAR(50) NOT NULL,
     suggestion VARCHAR(500),
-    table_number INT(10) NOT NULL
+    table_number INT(10) NOT NULL,
+    time TIMESTAMP DEFAULT now()
 );
 
 CREATE TABLE `food` (
