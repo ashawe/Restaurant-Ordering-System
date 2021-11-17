@@ -93,6 +93,23 @@ function checkout($food_ids,$phone_number,$table_number,$qtys) {
 
 }
 
+function changePassword($email, $password) {
+    Global $conn;
+
+    // sanitize
+    $email = mysqli_real_escape_string($conn,$email);
+    // breaks if escaped string
+    // $password = mysqli_real_escape_string($conn,$password);
+
+    $enc_password = password_hash($password,PASSWORD_DEFAULT);
+
+    $sql = "UPDATE `users` SET password = ?, first_login = false WHERE email_id = ?";
+    $stmt = mysqli_prepare($conn,$sql);
+    mysqli_stmt_bind_param($stmt,'ss',$enc_password,$email);
+    $result = mysqli_stmt_execute($stmt);
+    return $result;
+}
+
 function checkLogin($email, $password) {
 
     Global $conn;
@@ -108,16 +125,26 @@ function checkLogin($email, $password) {
     mysqli_stmt_execute($userStatement);
     $result = mysqli_stmt_get_result($userStatement);
     $getData = mysqli_fetch_assoc($result);
-    
-    // check username and password
-    if(!isset($getData['password']) || !password_verify($password,$getData['password']))
-    {
-        // @ToDo : Log?
-        // wrong username or password
-        return NULL;
-    }
 
-    return [$getData['role'],$getData['first_login']];
+    // var_dump($getData);
+    // writeC("email:" . $email);
+    // writeC("pwd: " . $password);  
+    // check username and password
+    if(isset($getData['password']))
+    {
+        // writeC("HERE");
+        // writeC("pwd=> " . $password);
+        // writeC("pwd harsh=> " . password_hash($password,PASSWORD_DEFAULT));
+        // writeC("get password: " . $getData['password']);
+        if(password_verify($password,$getData['password']))
+        {
+            // writeC("HERE2");
+            return [$getData['role'],$getData['first_login']];
+        }
+    }
+    // @ToDo : Log?
+    // wrong username or password
+    return NULL;
 }
 
 ?>

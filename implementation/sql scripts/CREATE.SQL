@@ -1,6 +1,6 @@
 CREATE TABLE `users` (
     email_id VARCHAR(100) NOT NULL PRIMARY KEY,
-    password VARCHAR(512) NOT NULL,
+    password CHAR(255) NOT NULL,
     role VARCHAR(10) NOT NULL,
     first_login BOOLEAN NOT NULL
 );

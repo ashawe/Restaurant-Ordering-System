@@ -13,9 +13,9 @@
 
     // check if user has access to this page.
     if( !isset($_SESSION['role']))
-    {
         header('Location: login.php?prompt=please+login+to+continue');
-    }
+    else if ( isset($_SESSION['reset_required']) )
+        header('Location: reset-password.php');
 
 
 ?>
