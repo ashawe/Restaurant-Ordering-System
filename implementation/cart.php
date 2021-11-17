@@ -132,6 +132,7 @@
                         <tbody>
                             <?php
                                 $total = 0;
+                                $i = 1;
                                 if(!$err)
                                     while($row = mysqli_fetch_assoc($foodArray))
                                     {
@@ -139,19 +140,17 @@
                                         {
                                             $total = $total + $row['price'] * $cart[$row['food_id']];
                             ?>
-                            <tr>
-                                <td scope="row"> <?=$row['food_id']?> </td>
-                                <td><?=$row['name']?></td>
-                                <td><?=$cart[$row['food_id']]?></td>
-                                <td>$<?= $row['price'] ?></td>
-                                <td>$<?= $row['price'] * $cart[$row['food_id']] ?></td>
-                            </tr>
+                                            <tr>
+                                                <td scope="row"> <?=$i?> </td>
+                                                <td><?=$row['name']?></td>
+                                                <td><?=$cart[$row['food_id']]?></td>
+                                                <td>$<?= $row['price'] ?></td>
+                                                <td>$<?= $row['price'] * $cart[$row['food_id']] ?></td>
+                                            </tr>
                             <?php
+                                            $i++;
+                                        }
                                     }
-                                }
-                                else {
-
-                                }
                             ?>
                             <tr>
                                 <th scope="row"></th>
@@ -200,7 +199,7 @@
                         </thead>
                         <tbody>
                             <?php
-                                $i = 0;
+                                $i = 1;
                                 $total = 0;
                                 $status = "";
                                 while( $row = mysqli_fetch_assoc($prevOrder))
