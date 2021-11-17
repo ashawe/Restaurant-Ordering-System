@@ -37,9 +37,10 @@
     if( isset($_COOKIE['order_id']) )
     {
         $orderID = $_COOKIE['order_id'];
-        $prevOrder = getOrder($orderID);
+        $prevOrder = getOrder($orderID,$_SESSION['table_number']);
     }
 
+    // handling checkout
     if( isset($_POST['submit']) ) {
         if( isset($_POST['phone-number']) && is_numeric($_POST['phone-number']) && strlen((string)$_POST['phone-number']) == 10 )
         {
@@ -65,12 +66,14 @@
                 else {
                     $SUCCESS = true;
                     $PRINT_MSG = "Order Placed Successfully";
-                    // delete cart cookie and add order id cookie
                     
+                    // delete cart cookie and add order id cookie
                     if(isset($_COOKIE['cart']))
+                    {
                         unset($_COOKIE['cart']); 
-                    setcookie('cart', null, -1, '/');
-                    setcookie('order_id',$order_id);
+                        setcookie('cart', null, time() -3000, '/');
+                    }
+                    setcookie('order_id',$order_id, time() + 60 * 60 * 24, '/');
                 }
             }
             else 

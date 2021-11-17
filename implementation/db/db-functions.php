@@ -2,12 +2,12 @@
 
 // assumes db connection
 
-function getOrder($order_id) {
+function getOrder($order_id,$table_number) {
     Global $conn;
 
-    $sql = "SELECT order_mapping.food_id,name,price,quantity,orders.order_status FROM order_mapping,food, orders WHERE order_mapping.food_id = food.food_id and orders.order_id = orders.order_id and order_mapping.order_id = ?";
+    $sql = "SELECT order_mapping.food_id,name,price,quantity,orders.order_status FROM order_mapping,food, orders WHERE order_mapping.food_id = food.food_id and orders.order_id = orders.order_id and order_mapping.order_id = ? and orders.table_number = ?";
     $userStatement = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($userStatement, 'i',$order_id);
+    mysqli_stmt_bind_param($userStatement, 'ii',$order_id, $table_number);
     mysqli_stmt_execute($userStatement);
     $result = mysqli_stmt_get_result($userStatement);
     return $result;
