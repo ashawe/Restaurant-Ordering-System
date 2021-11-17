@@ -36,7 +36,16 @@ $('.btn-minuse').on('click', function () {
     }
     $(this).parent().siblings('input').val(old_val > MIN ? old_val - 1 : old_val)
     cart_cookie = JSON.stringify(obj);
-    Cookies.set('cart',cart_cookie);
+
+    // if no entries in object, remove the cookie
+    if(Object.keys(obj).length === 0)
+    {
+        console.log('here');
+        Cookies.remove('cart');
+    }
+    else
+        // else set the cookie like normal
+        Cookies.set('cart',cart_cookie);
 })
 
 $('.btn-pluss').on('click', function () {
