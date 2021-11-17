@@ -200,17 +200,28 @@
                         </thead>
                         <tbody>
                             <?php
-
+                                $i = 0;
+                                $total = 0;
+                                while( $row = mysqli_fetch_assoc($prevOrder))
+                                {
+                            ?>
+                                <tr>
+                                    <td scope="row"><?=$i?></td>
+                                    <td><?=$row['name']?></td>
+                                    <td><?=$row['quantity']?></td>
+                                    <td>$<?= $row['price'] ?></td>
+                                    <td>$<?= $row['price'] * $row['quantity'] ?></td>
+                                </tr>
+                            <?php
+                                $total = $total + $row['price'] * $row['quantity'];
+                                $i++;
+                                }
                             ?>
                             <tr>
-                                <td scope="row">1   </td>
-                                <td>Veg Pizza</td>
-                                <td>2</td>
-                                <td>$5</td>
+                                <th scope="row"></th>
+                                <th colspan="3">Total</th>
+                                <th>$<?=$total?></th>
                             </tr>
-                            <?php
-                                
-                            ?>
                         </tbody>
                     </table>
                 </div>

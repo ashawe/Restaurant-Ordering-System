@@ -5,13 +5,12 @@
 function getOrder($order_id) {
     Global $conn;
 
-    $sql = "SELECT * FROM `orders` WHERE order_id = ?";
+    $sql = "SELECT order_mapping.food_id,name,price,quantity FROM order_mapping,food WHERE order_mapping.food_id = food.food_id and order_mapping.order_id = ?";
     $userStatement = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($userStatement, 'i',$order_id);
     mysqli_stmt_execute($userStatement);
     $result = mysqli_stmt_get_result($userStatement);
-    $getData = mysqli_fetch_assoc($result);
-    return $getData;
+    return $result;
 }
 
 function getFood() {
