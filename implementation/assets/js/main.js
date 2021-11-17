@@ -132,7 +132,7 @@ $('.btn-order-next').on('click', function () {
                 else if(result == "Error.")
                 {
                     generateToast("accepted-fail" + ran(), "Could not mark order as Accepted", "danger");
-                    window.location.href("view-orders.php");
+                    window.location.href ="view-orders.php";
                 }
             });
             break;
@@ -159,7 +159,7 @@ $('.btn-order-next').on('click', function () {
                 else if(result == "Error.")
                 {
                     generateToast("accepted-fail" + ran(), "Could not mark order as Accepted", "danger");
-                    window.location.href("view-orders.php");
+                    window.location.href ="view-orders.php";
                 }
             });
             break;
@@ -182,10 +182,15 @@ $('.btn-order-next').on('click', function () {
                         else if(result == "Error.")
                         {
                             generateToast("accepted-fail" + ran(), "Could not mark order as Completed", "danger");
-                            window.location.href("view-orders.php");
+                            window.location.href = "view-orders.php";
                         }
                     });
                 }
             }
     }
+});
+
+$('#btn-end-session').on('click',function(){
+    if(confirm("Are you sure? Click yes if you're leaving the restaurant."))
+        window.location.href = "end-session.php" ;
 });
