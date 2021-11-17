@@ -26,6 +26,7 @@ CREATE TABLE `order_mapping` (
     mapping_id INT(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     order_id INT(15) NOT NULL,
     food_id INT(15) NOT NULL,
+    quantity INT(15) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (food_id) REFERENCES food(food_id)
 );

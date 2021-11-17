@@ -2,6 +2,18 @@
 
 // assumes db connection
 
+function getOrder($order_id) {
+    Global $conn;
+
+    $sql = "SELECT * FROM `orders` WHERE order_id = ?";
+    $userStatement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($userStatement, 'i',$order_id);
+    mysqli_stmt_execute($userStatement);
+    $result = mysqli_stmt_get_result($userStatement);
+    $getData = mysqli_fetch_assoc($result);
+    return $getData;
+}
+
 function getFood() {
     Global $conn;
 
@@ -15,7 +27,7 @@ function getFood() {
     }
 }
 
-function checkout($food_ids,$phone_number,$table_number) {
+function checkout($food_ids,$phone_number,$table_number,$qtys) {
 
     GLobal $conn;
 
@@ -44,11 +56,14 @@ function checkout($food_ids,$phone_number,$table_number) {
             $order_id = $getData['order_id'];
             writeC('orderid=' . $order_id);
     
-            foreach($food_ids as $fid) {
+            for($i = 0; $i < count($food_ids); $i++)
+            {
+                $fid = $food_ids[$i];
+                $qty = $qtys[$i];
                 writeC('inserting into order_mapping with id:' . $fid);
-                $sql2 = "INSERT INTO order_mapping(order_id,food_id) VALUES(?,?)";
+                $sql2 = "INSERT INTO order_mapping(order_id,food_id,quantity) VALUES(?,?,?)";
                 $stmt2 = mysqli_prepare($conn,$sql2);
-                mysqli_stmt_bind_param($stmt2,'ii',$order_id,$fid);
+                mysqli_stmt_bind_param($stmt2,'iii',$order_id,$fid,$qty);
                 $result1 = mysqli_stmt_execute($stmt2);
                 // writeC('result' . var_dump($result1));
                 if(!$result1)

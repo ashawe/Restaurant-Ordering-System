@@ -34,6 +34,12 @@
     if( isset($_COOKIE['cart']) )
         $cart = json_decode(stripslashes($_COOKIE['cart']),true);
 
+    if( isset($_COOKIE['order_id']) )
+    {
+        $orderID = $_COOKIE['order_id'];
+        $prevOrder = getOrder($orderID);
+    }
+
     if( isset($_POST['submit']) ) {
         if( isset($_POST['phone-number']) && is_numeric($_POST['phone-number']) && strlen((string)$_POST['phone-number']) == 10 )
         {
@@ -41,13 +47,17 @@
             {
                 $tempFoodArr = $foodArray;
                 $foodIdsArr = array();
+                $qtyArr = array();
                 while($row = mysqli_fetch_assoc($tempFoodArr))
                 {
                     if(isset($cart[$row['food_id']]))
+                    {
                         array_push($foodIdsArr,$row['food_id']);
+                        array_push($qtyArr,$cart[$row['food_id']]);
+                    }
                 }
                 // insert in db
-                $order_id = checkout($foodIdsArr,$_POST['phone-number'],$_SESSION['table_number']);
+                $order_id = checkout($foodIdsArr,$_POST['phone-number'],$_SESSION['table_number'],$qtyArr);
                 if($order_id == NULL) {
                     $SUCCESS = false;
                     $PRINT_MSG = "ERROR checking out.";
@@ -171,7 +181,11 @@
                     </div>
                 </div>
             </div>
-            <h1 class="my-5 text-white text-center">Previous Orders</h1>
+            <?php
+                if( isset($prevOrder) )
+                {
+            ?>
+            <h1 class="my-5 text-white text-center">Previous Order</h1>
             <div class="container">
                 <div class="row" style="gap:25px">
                     <table class="table text-white">
@@ -181,26 +195,22 @@
                                 <th scope="col">Item Name</th>
                                 <th scope="col">Qty</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Combined Price</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+
+                            ?>
                             <tr>
-                                <td scope="row">1</td>
+                                <td scope="row">1   </td>
                                 <td>Veg Pizza</td>
                                 <td>2</td>
                                 <td>$5</td>
                             </tr>
-                            <tr>
-                                <td scope="row">2</td>
-                                <td>Peperonni Pizza</td>
-                                <td>1</td>
-                                <td>$15</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"></th>
-                                <th colspan="2">Total</th>
-                                <th>$25</th>
-                            </tr>
+                            <?php
+                                
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -221,6 +231,9 @@
                     </div>
                 </div>
             </div>
+            <?php 
+                }
+            ?>
         </main>
 
         <footer class="mt-auto text-white-50" style="position: fixed;">
