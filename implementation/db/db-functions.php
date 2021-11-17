@@ -15,6 +15,13 @@ function getFood() {
     }
 }
 
+function checkout($food_ids,$phoneNumber) {
+    // if food id or phone number is bad
+        // return NULL;
+    
+    
+}
+
 function checkLogin($email, $password) {
 
     Global $conn;

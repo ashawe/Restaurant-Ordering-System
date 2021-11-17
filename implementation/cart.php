@@ -2,7 +2,7 @@
 
     require 'db/db-connect.php';
     require 'db/debug-functions.php';
-    require 'db/admin-db-functions.php';
+    require 'db/db-functions.php';
     session_start();
 
     $is_logged_in = false;
@@ -31,6 +31,10 @@
     
     if( isset($_COOKIE['cart']) )
         $cart = json_decode(stripslashes($_COOKIE['cart']),true);
+
+    if( isset($_POST) ) {
+        // if( isset($_POST['phone-number']), )   
+    }
     
 ?>
 
@@ -116,12 +120,20 @@
                 <div class="row">
                     <div class="col-6"></div>
                     <div class="col-6">
-                        <form action="POST">
+                        <?php
+                            if(isset($cart))
+                            {
+                        ?>
+                        <form method="POST">
                             <div class="input-group my-5">
-                                <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" required>
+                                <input type="number" class="form-control" placeholder="Phone Number" name="phone-number" aria-label="Phone Number" required>
+                                <input type="hidden" name="submit">
                                 <button class="btn btn-primary" type="button" id="btn-checkout">Checkout!</button>
                             </div>
                         </form>
+                        <?php
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
