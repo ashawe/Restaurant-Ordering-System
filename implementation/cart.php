@@ -202,19 +202,21 @@
                             <?php
                                 $i = 0;
                                 $total = 0;
+                                $status = "";
                                 while( $row = mysqli_fetch_assoc($prevOrder))
                                 {
+                                    $status = $row['order_status'];
                             ?>
-                                <tr>
-                                    <td scope="row"><?=$i?></td>
-                                    <td><?=$row['name']?></td>
-                                    <td><?=$row['quantity']?></td>
-                                    <td>$<?= $row['price'] ?></td>
-                                    <td>$<?= $row['price'] * $row['quantity'] ?></td>
-                                </tr>
+                                    <tr>
+                                        <td scope="row"><?=$i?></td>
+                                        <td><?=$row['name']?></td>
+                                        <td><?=$row['quantity']?></td>
+                                        <td>$<?= $row['price'] ?></td>
+                                        <td>$<?= $row['price'] * $row['quantity'] ?></td>
+                                    </tr>
                             <?php
-                                $total = $total + $row['price'] * $row['quantity'];
-                                $i++;
+                                    $total = $total + $row['price'] * $row['quantity'];
+                                    $i++;
                                 }
                             ?>
                             <tr>
@@ -227,19 +229,35 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <div class="align-items-center text-white bg-success border-0">
+                        <div class="align-items-center text-white bg-<?php switch($status) {
+                            case "PLACED": echo "secondary";
+                                break;
+                            case "ACCEPTED": echo "warning";
+                                break;
+                            case "PREPARING": echo "primary";
+                                break;
+                            case "COMPLETED": echo "success";
+                                break;
+                        }?> border-0">
                             <div class="d-flex justify-content-center">
                                 <div class="toast-body">
-                                    <h4>Order Status: Completed</h4>
+                                    <h4>Order Status: <?= $status ?></h4>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <a href="rate.php">
-                            <button class="btn btn-primary w-100 h-100" type="button" id="btn-rate">Click here to Rate and Review!</button>
-                        </a>
-                    </div>
+                    <?php
+                        if($status == "COMPLETED") 
+                        {
+                    ?>
+                            <div class="col-6">
+                                <a href="rate.php">
+                                    <button class="btn btn-primary w-100 h-100" type="button" id="btn-rate">Click here to Rate and Review!</button>
+                                </a>
+                            </div>
+                    <?php
+                        }
+                    ?>
                 </div>
             </div>
             <?php 

@@ -5,7 +5,7 @@
 function getOrder($order_id) {
     Global $conn;
 
-    $sql = "SELECT order_mapping.food_id,name,price,quantity FROM order_mapping,food WHERE order_mapping.food_id = food.food_id and order_mapping.order_id = ?";
+    $sql = "SELECT order_mapping.food_id,name,price,quantity,orders.order_status FROM order_mapping,food, orders WHERE order_mapping.food_id = food.food_id and orders.order_id = orders.order_id and order_mapping.order_id = ?";
     $userStatement = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($userStatement, 'i',$order_id);
     mysqli_stmt_execute($userStatement);
@@ -37,7 +37,7 @@ function checkout($food_ids,$phone_number,$table_number,$qtys) {
     mysqli_begin_transaction($conn);
     try{
 
-        $sql = "INSERT INTO orders(order_status,phone_number,table_number) VALUES('NEW',?,?)";
+        $sql = "INSERT INTO orders(order_status,phone_number,table_number) VALUES('PLACED',?,?)";
         $stmt = mysqli_prepare($conn,$sql);
         mysqli_stmt_bind_param($stmt,'ii',$phone_number,$table_number);
         $result = mysqli_stmt_execute($stmt);
