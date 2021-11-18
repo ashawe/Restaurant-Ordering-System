@@ -16,9 +16,21 @@
     if( isset($_POST['submit']) && $_SESSION['role'] == "ADMIN") {
         if( isset($_POST['food_id']) ) {
             $food_id = mysqli_real_escape_string($conn,$_POST['food_id']);
+            
+            $food_info = getFoodInfo($food_id);
+
             writeC($food_id);
             $ret = removeFood($food_id);
             if($ret) {
+
+                if($food_info != NULL) 
+                {
+                    // delete food image
+                    $filename = "assets/img/" . $food_info['photo'];
+                    if (file_exists($filename)) {
+                        unlink($filename);
+                    }
+                }
                 $SUCCESS = true;
                 $PRINT_MSG = "Removed successfully";
             }
