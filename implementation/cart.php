@@ -186,6 +186,7 @@
             <?php
                 if( isset($prevOrder) )
                 {
+                    // var_dump($prevOrder);
             ?>
             <h1 class="my-5 text-white text-center">Previous Order</h1>
             <div class="container">
@@ -286,7 +287,12 @@
                     echo "$( document ).ready(function(){ generateToast('failure-toast','" . $PRINT_MSG . "','danger')});";
                 }
                 else {
-                    echo "$( document ).ready(function(){ generateToast('success-toast','" . $PRINT_MSG . "','success')});";
+                    echo "$( document ).ready(function(){ 
+                        generateToast('success-toast','" . $PRINT_MSG . "','success');
+                        setTimeout(() => {
+                            window.location.replace('cart.php');
+                        }, 3000);
+                    });";
                 }
             }
         ?>
