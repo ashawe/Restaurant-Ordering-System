@@ -111,7 +111,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="gap:25px">
                             <h1 class="text-white mt-5">Reviews:</h1>
                             <?php
                                 if( $reviews != NULL )
@@ -122,8 +122,8 @@
                                         {
                             ?>
                                             <div class="card">
-                                                <div class="card-body p-5">
-                                                    <p><?=$row['review']?></p>
+                                                <div class="card-body p-3">
+                                                    <p class="mb-0"><?=$row['review']?></p>
                                                 </div>
                                             </div>
                             <?php   
