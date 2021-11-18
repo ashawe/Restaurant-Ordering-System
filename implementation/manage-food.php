@@ -1,3 +1,21 @@
+<?php
+
+    require_once 'db/db-connect.php';
+    require 'db/debug-functions.php'; // @ToDO remove
+    require 'db/admin-db-functions.php';
+    require 'db/db-functions.php';
+
+    session_start();
+
+    // check if user has access to this page.
+    if( !isset($_SESSION['role']) || $_SESSION['role'] != "ADMIN")
+    {
+        header('Location: login.php?prompt=please+login+as+admin+to+continue');
+    }
+
+    $food = getFood();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,52 +71,42 @@
             <h1 class="my-5 text-white text-center">Manage Food!</h1>
             <div class="container">
                 <div class="row" style="gap:25px">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <img class="item-img" src="assets/img/pizz.jpg" alt="">
-                                    <div class="item-description px-5">
-                                        <p class="title">Veg Pizza</p>
-                                        <p class="body">Onion, Tomato, Capsicum</p>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam fugiat officiis ipsum cum quaerat similique vel repellat ducimus neque praesentium molestias, laudantium nobis repellendus quasi corporis debitis sint possimus minima!</p>
-                                    </div>
-                                </div>
-                                <div class="right-part">
-                                    <div class="item-cost">
-                                        <p class="cost text-center">$5</p>
-                                    </div>
-                                    <div class="item-cart">
-                                        <a href="add-edit-food.php?id=1"><button class="btn btn-warning cart-add w-100 mb-2" type="button">Edit Item</button></a>
-                                        <button class="btn btn-danger cart-add w-100" type="button">Remove Item</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <img class="item-img" src="assets/img/pizz.jpg" alt="">
-                                    <div class="item-description px-5">
-                                        <p class="title">Peperonni Pizza</p>
-                                        <p class="body">Onion, Tomato, Capsicum, Pepperoni</p>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam fugiat officiis ipsum cum quaerat similique vel repellat ducimus neque praesentium molestias, laudantium nobis repellendus quasi corporis debitis sint possimus minima!</p>
-                                    </div>
-                                </div>
-                                <div class="right-part">
-                                    <div class="item-cost">
-                                        <p class="cost text-center">$15</p>
-                                    </div>
-                                    <div class="item-cart">
-                                        <a href="add-edit-food.php?id=1"><button class="btn btn-warning cart-add w-100 mb-2" type="button">Edit Item</button></a>
-                                        <button class="btn btn-danger cart-add w-100" type="button">Remove Item</button>
+                <?php
+                    if(isset($food))
+                    {
+                        while($row = mysqli_fetch_assoc($food))
+                        {
+                ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="menu-item-container">
+                                        <div class="left-part">
+                                            <img class="item-img" src="assets/img/<?=$row['photo']?>" alt="">
+                                            <div class="item-description px-5">
+                                                <p class="title"><?=$row['name']?></p>
+                                                <p class="body"><?=$row['description']?></p>
+                                            </div>
+                                        </div>
+                                        <div class="right-part">
+                                            <div class="item-cost">
+                                                <p class="cost text-center">$<?=$row['price']?></p>
+                                            </div>
+                                            <div class="item-cart">
+                                                <a href="add-edit-food.php?id=<?=$row['food_id']?>"><button class="btn btn-warning cart-add w-100 mb-2" type="button">Edit Item</button></a>
+                                                <form method="POST">
+                                                    <input type="hidden" name="submit" value="submit">
+                                                    <input type="hidden" name="food_id" value="<?=$row['food_id']?>">
+                                                    <button class="btn btn-danger cart-add w-100" type="button">Remove Item</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                <?php    
+                        }                    
+                    }
+                ?>
                 </div>
             </div>
         </main>
@@ -111,6 +119,16 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+        <?php
+            if( isset($SUCCESS) && isset($PRINT_MSG) ) {
+                if($SUCCESS)
+                    echo "$( document ).ready(function(){ generateToast('success-failure-toast','" . $PRINT_MSG. "','success');});";
+                else
+                    echo "$( document ).ready(function(){ generateToast('success-failure-toast','" . $PRINT_MSG . "','danger');});";
+            } 
+        ?>
+    </script>
 </body>
 
 </html>
