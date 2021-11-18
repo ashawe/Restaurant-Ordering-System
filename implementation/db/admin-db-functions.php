@@ -77,4 +77,38 @@ function deleteRating($rating_id) {
     return $result;
 }
 
+function removeFood($food_id) {
+    Global $conn;
+
+    mysqli_autocommit($conn,false);
+    mysqli_begin_transaction($conn);
+
+    $sql = "DELETE FROM `order_mapping` WHERE food_id = ?";
+    $stmt = mysqli_prepare($conn,$sql);
+    mysqli_stmt_bind_param($stmt,'i',$food_id);
+    $result = mysqli_stmt_execute($stmt);
+
+    $sql1 = "DELETE FROM `ratings` WHERE food_id = ?";
+    $stmt1 = mysqli_prepare($conn,$sql1);
+    mysqli_stmt_bind_param($stmt1,'i',$food_id);
+    $result1 = mysqli_stmt_execute($stmt1);
+
+    $sql2 = "DELETE FROM `food` WHERE food_id = ?";
+    $stmt2 = mysqli_prepare($conn,$sql2);
+    mysqli_stmt_bind_param($stmt2,'i',$food_id);
+    $result2 = mysqli_stmt_execute($stmt2);
+
+    if($result && $result1 && $result2)
+    {
+        mysqli_commit($conn);
+        mysqli_autocommit($conn,true);
+        return true;
+    }
+    else {
+        mysqli_rollback($conn);
+        mysqli_autocommit($conn,true);
+        return false;
+    }
+}
+
 ?>

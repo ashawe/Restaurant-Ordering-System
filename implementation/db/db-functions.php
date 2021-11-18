@@ -67,6 +67,7 @@ function checkout($food_ids,$phone_number,$table_number,$qtys) {
     $phone_number = mysqli_real_escape_string($conn,$phone_number);
     $table_number = mysqli_real_escape_string($conn,$table_number);
 
+    mysqli_autocommit($conn,false);
     mysqli_begin_transaction($conn);
     try{
 
@@ -108,17 +109,20 @@ function checkout($food_ids,$phone_number,$table_number,$qtys) {
             }
             mysqli_commit($conn);
             writeC("returning");
+            mysqli_autocommit($conn,true);
             return $order_id;
         }
         else {
             writeC("in else");
             mysqli_rollback($conn);
+            mysqli_autocommit($conn,true);
             return NULL;
             // @ToDo: log
         }
     }
     catch(Exception $e) {
         mysqli_rollback($conn);
+        mysqli_autocommit($conn,true);
         writeC("in catch");
         // @ToDo: log
         return NULL;

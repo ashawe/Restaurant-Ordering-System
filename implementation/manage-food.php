@@ -13,6 +13,22 @@
         header('Location: login.php?prompt=please+login+as+admin+to+continue');
     }
 
+    if( isset($_POST['submit']) && $_SESSION['role'] == "ADMIN") {
+        if( isset($_POST['food_id']) ) {
+            $food_id = mysqli_real_escape_string($conn,$_POST['food_id']);
+            writeC($food_id);
+            $ret = removeFood($food_id);
+            if($ret) {
+                $SUCCESS = true;
+                $PRINT_MSG = "Removed successfully";
+            }
+            else {
+                $SUCCESS = false;
+                $PRINT_MSG = "Failed to remove";
+            }
+        }
+    }
+
     $food = getFood();
 
 ?>
@@ -96,7 +112,7 @@
                                                 <form method="POST">
                                                     <input type="hidden" name="submit" value="submit">
                                                     <input type="hidden" name="food_id" value="<?=$row['food_id']?>">
-                                                    <button class="btn btn-danger cart-add w-100" type="button">Remove Item</button>
+                                                    <button class="btn btn-danger cart-add w-100" type="submit">Remove Item</button>
                                                 </form>
                                             </div>
                                         </div>
