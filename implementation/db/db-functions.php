@@ -5,7 +5,7 @@
 function getOrder($order_id,$table_number) {
     Global $conn;
 
-    $sql = "SELECT order_mapping.food_id,name,price,quantity,orders.order_status, photo FROM order_mapping,food, orders WHERE order_mapping.food_id = food.food_id and orders.order_id = orders.order_id and order_mapping.order_id = ? and orders.table_number = ?";
+    $sql = "SELECT order_mapping.food_id,name,price,quantity,orders.order_status, photo FROM order_mapping,food, orders WHERE order_mapping.food_id = food.food_id and orders.order_id = order_mapping.order_id and order_mapping.order_id = ? and orders.table_number = ?";
     $userStatement = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($userStatement, 'ii',$order_id, $table_number);
     mysqli_stmt_execute($userStatement);
@@ -198,6 +198,40 @@ function rate($food_id, $rating, $review) {
     mysqli_stmt_bind_param($stmt,'iis',$food_id,$rating,$review);
     $result = mysqli_stmt_execute($stmt);
     return $result;
+}
+
+function getFoodInfo($food_id) {
+    Global $conn;
+
+    $food_id = mysqli_real_escape_string($conn,$food_id);
+
+    $sql = "SELECT food.food_id,name,price,photo,description,ROUND(AVG(rating),2) as rating FROM `food` LEFT JOIN ratings ON food.food_id = ratings.food_id GROUP BY food.food_id HAVING food.food_id = ?";
+    $userStatement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($userStatement, 'i',$food_id);
+    mysqli_stmt_execute($userStatement);
+    $result = mysqli_stmt_get_result($userStatement);
+    if(mysqli_num_rows($result) > 0)
+    {
+        $getData = mysqli_fetch_assoc($result);
+        return $getData;
+    }
+    else return NULL;
+}
+
+function getReviews($food_id) {
+    Global $conn;
+
+    $food_id = mysqli_real_escape_string($conn,$food_id);
+
+    $sql = "SELECT * FROM `ratings` WHERE food_id = ?";
+    $userStatement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($userStatement, 'i',$food_id);
+    mysqli_stmt_execute($userStatement);
+    $result = mysqli_stmt_get_result($userStatement);
+    if(mysqli_num_rows($result) > 0)
+        return $result;
+    else 
+        return NULL;
 }
 
 ?>
