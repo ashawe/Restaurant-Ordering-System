@@ -6,6 +6,9 @@
     
     session_start();
 
+    if(isset($_GET['prompt']))
+        $PROMPT_MSG = $_GET['prompt'];
+
     $is_logged_in = false;
     $err = false;
 
@@ -122,6 +125,13 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+        <?php 
+            if(isset($PROMPT_MSG)) {
+                echo "$( document ).ready(function(){ generateToast('prompt-toast','".$PROMPT_MSG."','info');});";
+            } 
+        ?>
+    </script>
 </body>
 
 </html>

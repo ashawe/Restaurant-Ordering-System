@@ -5,7 +5,7 @@
 function getOrder($order_id,$table_number) {
     Global $conn;
 
-    $sql = "SELECT order_mapping.food_id,name,price,quantity,orders.order_status FROM order_mapping,food, orders WHERE order_mapping.food_id = food.food_id and orders.order_id = orders.order_id and order_mapping.order_id = ? and orders.table_number = ?";
+    $sql = "SELECT order_mapping.food_id,name,price,quantity,orders.order_status, photo FROM order_mapping,food, orders WHERE order_mapping.food_id = food.food_id and orders.order_id = orders.order_id and order_mapping.order_id = ? and orders.table_number = ?";
     $userStatement = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($userStatement, 'ii',$order_id, $table_number);
     mysqli_stmt_execute($userStatement);
@@ -178,6 +178,26 @@ function checkLogin($email, $password) {
     // @ToDo : Log?
     // wrong username or password
     return NULL;
+}
+
+function addSuggestion($order_id, $suggestion) {
+    Global $conn;
+
+    $sql = "UPDATE `orders` SET suggestion = ? WHERE order_id = ?";
+    $stmt = mysqli_prepare($conn,$sql);
+    mysqli_stmt_bind_param($stmt,'si',$suggestion,$order_id);
+    $result = mysqli_stmt_execute($stmt);
+    return $result;
+}
+
+function rate($food_id, $rating, $review) {
+    Global $conn;
+
+    $sql = "INSERT INTO ratings(food_id,rating,review) VALUES(?,?,?)";
+    $stmt = mysqli_prepare($conn,$sql);
+    mysqli_stmt_bind_param($stmt,'iis',$food_id,$rating,$review);
+    $result = mysqli_stmt_execute($stmt);
+    return $result;
 }
 
 ?>
