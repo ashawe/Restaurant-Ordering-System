@@ -57,4 +57,24 @@ function removeChefAccount($email_id) {
     return $ret;
 }
 
+function deleteSuggestion($order_id) {
+    Global $conn;
+
+    $sql = "UPDATE `orders` SET suggestion = NULL WHERE order_id = ?";
+    $stmt = mysqli_prepare($conn,$sql);
+    mysqli_stmt_bind_param($stmt,'i',$order_id);
+    $result = mysqli_stmt_execute($stmt);
+    return $result;
+}
+
+function deleteRating($rating_id) {
+    Global $conn;
+
+    $sql = "DELETE FROM `ratings` WHERE rating_id = ?";
+    $stmt = mysqli_prepare($conn,$sql);
+    mysqli_stmt_bind_param($stmt,'i',$rating_id);
+    $result = mysqli_stmt_execute($stmt);
+    return $result;
+}
+
 ?>

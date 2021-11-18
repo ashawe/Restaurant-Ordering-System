@@ -234,4 +234,30 @@ function getReviews($food_id) {
         return NULL;
 }
 
+function getSuggestions() {
+    Global $conn;
+
+    $sql = "SELECT order_id,suggestion FROM `orders`";
+    $userStatement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_execute($userStatement);
+    $result = mysqli_stmt_get_result($userStatement);
+    if(mysqli_num_rows($result) > 0)
+        return $result;
+    else 
+        return NULL;
+}
+
+function getFoodReviews() {
+    Global $conn;
+
+    $sql = "SELECT rating_id,food.food_id,rating,review,name,photo,description from ratings, food  WHERE ratings.food_id = food.food_id ORDER BY `ratings`.`food_id` ASC";
+    $userStatement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_execute($userStatement);
+    $result = mysqli_stmt_get_result($userStatement);
+    if(mysqli_num_rows($result) > 0)
+        return $result;
+    else 
+        return NULL;
+}
+
 ?>
