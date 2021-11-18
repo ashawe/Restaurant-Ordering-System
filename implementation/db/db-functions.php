@@ -49,7 +49,7 @@ function viewOrders() {
 function getFood() {
     Global $conn;
 
-    $sql = "SELECT * FROM `food`";
+    $sql = "SELECT food.food_id,name,price,photo,description,ROUND(AVG(rating),2) as rating FROM `food` LEFT JOIN ratings ON food.food_id = ratings.food_id GROUP BY food.food_id";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {

@@ -85,11 +85,13 @@
                             <div class="menu-item-container">
                                 <div class="left-part">
                                     <img class="item-img" src="assets/img/<?= $row['photo'];?>" alt="">
-                                    <div class="item-description px-5">
-                                        <p class="title"><?= $row['name']?></p>
-                                        <p class="body"><?= $row['description']?></p>
+                                        <div class="item-description px-5">
+                                            <a class="text-dark" href="item.php?id=<?=$row['food_id']?>">
+                                                <p class="title"><?= $row['name']?> <?= $row['rating'] != NULL ? "( AVG. Rating: ". $row['rating'] ." / 5 )" : ""?> </p>
+                                            </a>
+                                            <p class="body"><?= $row['description']?></p>
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="right-part">
                                     <div class="item-cost">
                                         <p class="cost text-center">$<?= $row['price']?></p>
