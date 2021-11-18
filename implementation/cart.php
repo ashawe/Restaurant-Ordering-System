@@ -261,13 +261,13 @@
                         }
                     ?>
                 </div>
-                <div class="row mt-3 px-3">
-                        <button class="py-3 btn btn-danger w-100" type="button" id="btn-end-session">END SESSION</button>
-                </div>
             </div>
             <?php 
                 }
             ?>
+                <div class="row mt-3 px-3">
+                        <button class="py-3 btn btn-danger w-100" type="button" id="btn-end-session">END SESSION</button>
+                </div>
         </main>
 
         <footer class="mt-auto text-white-50" style="position: fixed;">
