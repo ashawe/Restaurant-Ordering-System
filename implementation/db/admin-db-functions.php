@@ -31,4 +31,30 @@ function addChef($email) {
     }
 }
 
+    function getChefs() {
+    Global $conn;
+
+    $sql = "SELECT email_id FROM users WHERE role='CHEF'";
+    
+    $userStatement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_execute($userStatement);
+    $chefInfo = mysqli_stmt_get_result($userStatement);
+
+    if(mysqli_num_rows($chefInfo) == 0)
+        $chefInfo = NULL;
+    else
+        return $chefInfo;
+}
+
+function removeChefAccount($email_id) {
+    Global $conn;
+
+    $sql = "DELETE FROM `users` WHERE `users`.`email_id` = ?";
+
+    $userStatement = mysqli_prepare($conn,$sql);
+    mysqli_stmt_bind_param($userStatement,"s",$email_id);
+    $ret = mysqli_stmt_execute($userStatement);
+    return $ret;
+}
+
 ?>

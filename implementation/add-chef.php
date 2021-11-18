@@ -3,10 +3,8 @@
     require 'db/debug-functions.php'; // @ToDO remove
     require 'db/admin-db-functions.php';
     
-    $SUCCESS = false;
     $PWD = "";
 
-    // @ToDo : check if user is logged in as admin
     session_start();
 
     // check if login redirected the user => show toast
@@ -117,7 +115,7 @@
     <script src="assets/js/main.js"></script>
     <script>
         <?php 
-            if(isset($_POST['chef-mail']) || $SUCCESS ) {
+            if(isset($_POST['chef-mail']) && isset($SUCCESS) ) {
                 if($SUCCESS)
                     echo "$( document ).ready(function(){ generateToast('success-failure-toast','Chef Added Successfully','success');});";
                 else

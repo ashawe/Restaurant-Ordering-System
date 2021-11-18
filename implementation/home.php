@@ -17,6 +17,7 @@
     {
         $_SESSION['table_number'] = $_POST['table_number'];
         $is_logged_in = true;
+        session_regenerate_id(true);
     }
     if(isset($_SESSION['table_number']))
         $is_logged_in = true;

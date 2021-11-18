@@ -1,3 +1,44 @@
+<?php
+
+    require_once 'db/db-connect.php';
+    require 'db/debug-functions.php'; // @ToDO remove
+    require 'db/admin-db-functions.php';
+
+    session_start();
+
+    // check if user has access to this page.
+    if( !isset($_SESSION['role']) || $_SESSION['role'] != "ADMIN")
+    {
+        header('Location: login.php?prompt=please+login+as+admin+to+continue');
+    }
+
+    if(isset($_POST['submit']))
+    {
+        writeC("here");
+        // @ToDo : Apply role check to each POST CALL
+        if(isset($_POST['email_id']) && $_SESSION['role'] == "ADMIN")
+        {
+            writeC("here2");
+            $email_id = mysqli_real_escape_string($conn,$_POST['email_id']);
+            $ret = removeChefAccount($email_id);
+            if($ret)
+            {
+                writeC("here3");
+                $SUCCESS = true;
+                $PRINT_MSG = "Chef removed successfully.";
+            }
+            else {
+                writeC("here4");
+                $SUCCESS = false;
+                $PRINT_MSG = "Error removing chef.";
+            }
+        }
+    }
+
+    $chefs = getChefs();
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +46,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Manage Chef</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/main.css">
@@ -18,7 +59,7 @@
 <body class="d-flex h-100 bg-dark">
 
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
+        <header>
             <div class="">
                 <a href="index.php"><h3 class="float-md-start mb-0 text-white">Restaurant Ordering System</h3></a>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
@@ -53,54 +94,44 @@
             <h1 class="my-5 text-white text-center">Manage Chefs</h1>
             <div class="container">
                 <div class="row" style="gap:25px">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description px-5">
-                                        <p class="title">chef1mail@example.com</p>
+                    <?php
+                        if( isset($chefs) && $chefs != NULL )
+                        {
+                            while($row = mysqli_fetch_assoc($chefs))
+                            {
+                    ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="menu-item-container">
+                                            <div class="left-part">
+                                                <div class="item-description px-5">
+                                                    <p class="title"><?=$row['email_id']?></p>
+                                                </div>
+                                            </div>
+                                            <div class="right-part">
+                                                <div class="item-cart">
+                                                    <form method="POST">
+                                                        <input type="hidden" name="submit" value="submit">
+                                                        <input type="hidden" value="<?=$row['email_id']?>" name="email_id">
+                                                        <button class="btn btn-danger cart-add w-100" type="submit">Remove Chef</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="right-part">
-                                    <div class="item-cart">
-                                        <button class="btn btn-danger cart-add w-100" type="button">Remove Chef</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description px-5">
-                                        <p class="title">chef2.mail@example.com</p>
-                                    </div>
-                                </div>
-                                <div class="right-part">
-                                    <div class="item-cart">
-                                        <button class="btn btn-danger cart-add w-100" type="button">Remove Chef</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="menu-item-container">
-                                <div class="left-part">
-                                    <div class="item-description px-5">
-                                        <p class="title">chef.3mail@example.com</p>
-                                    </div>
-                                </div>
-                                <div class="right-part">
-                                    <div class="item-cart">
-                                        <button class="btn btn-danger cart-add w-100" type="button">Remove Chef</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php      
+                            }
+                        }
+                        else {
+                    ?>
+                            <h1 class="text-white">No Chefs Present.</h1>
+                            <a class="text-white" href='add-chef.php'>
+                                <button class="btn btn-large btn-primary w-100">Click here to add chef</button>
+                            </a>
+                    <?php                    
+                        }
+                    ?>
                 </div>
             </div>
         </main>
@@ -113,6 +144,16 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script>
+        <?php
+            if( isset($SUCCESS) && isset($PRINT_MSG) ) {
+                if($SUCCESS)
+                    echo "$( document ).ready(function(){ generateToast('success-failure-toast','" . $PRINT_MSG. "','success');});";
+                else
+                    echo "$( document ).ready(function(){ generateToast('success-failure-toast','" . $PRINT_MSG . "','danger');});";
+            } 
+        ?>
+    </script>
 </body>
 
 </html>
