@@ -165,7 +165,7 @@
         </header>
 
         <main class="py-3 text-white">
-            <h1 class="my-5 text-center">Add / Edit Food!</h1>
+            <h1 class="my-5 text-center">Add Food!</h1>
             <div class="container">
                 <div class="row" style="gap:25px">
                     <form enctype="multipart/form-data" method="POST">

@@ -120,7 +120,6 @@
                                                 <p class="cost text-center">$<?=$row['price']?></p>
                                             </div>
                                             <div class="item-cart">
-                                                <a href="add-edit-food.php?id=<?=$row['food_id']?>"><button class="btn btn-warning cart-add w-100 mb-2" type="button">Edit Item</button></a>
                                                 <form method="POST">
                                                     <input type="hidden" name="submit" value="submit">
                                                     <input type="hidden" name="food_id" value="<?=$row['food_id']?>">
