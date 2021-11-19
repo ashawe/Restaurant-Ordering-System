@@ -2,7 +2,6 @@
 
     require 'db/db-connect.php';
     require 'db/db-functions.php';
-    require 'db/debug-functions.php';
     
     session_start();
 

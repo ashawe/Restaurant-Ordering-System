@@ -78,7 +78,6 @@ function checkout($food_ids,$phone_number,$table_number,$qtys) {
     
         // if successful
         if($result) {
-            writeC('inserted into orders');
             // fetch the latest order id that was generated to put into order_mapping table.
             $sql1 = "SELECT order_id from orders WHERE table_number = ? AND phone_number = ? ORDER BY time DESC";
             $userStatement = mysqli_prepare($conn, $sql1);
@@ -87,13 +86,11 @@ function checkout($food_ids,$phone_number,$table_number,$qtys) {
             $result = mysqli_stmt_get_result($userStatement);
             $getData = mysqli_fetch_assoc($result);
             $order_id = $getData['order_id'];
-            writeC('orderid=' . $order_id);
     
             for($i = 0; $i < count($food_ids); $i++)
             {
                 $fid = $food_ids[$i];
                 $qty = $qtys[$i];
-                writeC('inserting into order_mapping with id:' . $fid);
                 $sql2 = "INSERT INTO order_mapping(order_id,food_id,quantity) VALUES(?,?,?)";
                 $stmt2 = mysqli_prepare($conn,$sql2);
                 mysqli_stmt_bind_param($stmt2,'iii',$order_id,$fid,$qty);
@@ -102,18 +99,16 @@ function checkout($food_ids,$phone_number,$table_number,$qtys) {
                 if(!$result1)
                 {
                     // @ToDo log
-                    writeC(mysqli_error($conn));
+                    // writeC(mysqli_error($conn));
                     mysqli_rollback($conn);
                     return NULL;
                 }
             }
             mysqli_commit($conn);
-            writeC("returning");
             mysqli_autocommit($conn,true);
             return $order_id;
         }
         else {
-            writeC("in else");
             mysqli_rollback($conn);
             mysqli_autocommit($conn,true);
             return NULL;
@@ -123,7 +118,6 @@ function checkout($food_ids,$phone_number,$table_number,$qtys) {
     catch(Exception $e) {
         mysqli_rollback($conn);
         mysqli_autocommit($conn,true);
-        writeC("in catch");
         // @ToDo: log
         return NULL;
     }    
@@ -268,7 +262,6 @@ function getRelatedFood($search_query) {
     Global $conn;
 
     $sql = "SELECT food.food_id,name,price,photo,description,ROUND(AVG(rating),2) as rating FROM `food` LEFT JOIN ratings ON food.food_id = ratings.food_id WHERE name LIKE '%". $search_query ."%' or description LIKE '%". $search_query ."%' GROUP BY food.food_id";
-    writeC($sql);
     $userStatement = mysqli_prepare($conn, $sql);
     mysqli_stmt_execute($userStatement);
     $result = mysqli_stmt_get_result($userStatement);

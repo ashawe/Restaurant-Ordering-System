@@ -20,7 +20,7 @@
         header('Location: login.php?prompt=please+login+as+admin+to+continue');
     }
 
-    if(isset($_POST['chef-mail']))
+    if(isset($_POST['chef-mail']) && $_SESSION['role'] == "ADMIN")
     {
         $chefMail = $_POST['chef-mail'];
         $ret = addChef($chefMail);
@@ -77,7 +77,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <a class="nav-link text-white" aria-current="page" href="logout.php">logout</a>
+                    <a class="nav-link text-white" aria-current="page" href="logout.php">Logout</a>
                 </nav>
             </div>
         </header>

@@ -1,6 +1,5 @@
 <?php
     require_once 'db/db-connect.php';
-    require 'db/debug-functions.php'; // @ToDO remove
     require 'db/admin-db-functions.php';
     
     $SUCCESS = false;
@@ -16,7 +15,7 @@
     // var_dump($_POST);
 
     // Check if image file is a actual image or fake image
-    if( isset($_POST["food-name"]) && isset($_POST["food-description"]) && isset($_FILES["food-img"]) && isset($_POST["food-price"]) ) {
+    if( isset($_POST["food-name"]) && isset($_POST["food-description"]) && isset($_FILES["food-img"]) && isset($_POST["food-price"])  && $_SESSION['role'] == "ADMIN") {
         
         $target_dir = "assets/img/";
         $target_file = $target_dir . basename($_FILES["food-img"]["name"]);
@@ -100,7 +99,7 @@
             } else {
                 // @ToDo : Write to log
                 $PRINT_MSG = "There was some error. Please try again later";
-                writeC("Error: ". $ret . mysqli_error($conn));
+                // writeC("Error: ". $ret . mysqli_error($conn));
                 $SUCCESS = false;
             }
 
@@ -130,7 +129,6 @@
 </head>
 
 <body class="d-flex h-100 bg-dark">
-    <!-- @ToDo: Fix "active" link in navbar -->
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div class="">
@@ -159,7 +157,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <a class="nav-link text-white" aria-current="page" href="logout.php">logout</a>
+                    <a class="nav-link text-white" aria-current="page" href="logout.php">Logout</a>
                 </nav>
             </div>
         </header>
@@ -187,7 +185,6 @@
                             <input type="number" step="0.01" class="form-control" id="food-price" name="food-price" required>
                         </div>
                         <input type="hidden" name="submit" value="submit">
-                        <!-- @ToDo : Redirect Back to Manage Page if come from there. -->
                         <button type="submit" class="btn btn-primary">Add Food Item</button>
                     </form>
                 </div>

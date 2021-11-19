@@ -1,6 +1,5 @@
 <?php
 
-require 'db/debug-functions.php';
 
 session_start();
 
@@ -10,7 +9,6 @@ session_unset();
 // destroy the session
 session_destroy(); 
 
-// @ToDo : clear cookies
 if (isset($_COOKIE['order_id'])) {
     unset($_COOKIE['order_id']); 
     setcookie('order_id', null, time() -3000, '/');

@@ -30,7 +30,6 @@ $('.btn-minuse').on('click', function () {
         $(this).parent().parent().siblings('.cart-add')[0].dataset['toggle'] = "on";
         $(this).parent().parent().siblings('.cart-add').removeClass('d-none');
         $(this).parent().parent().addClass('d-none');
-        // @ToDo: Remove Item from Cart
         generateToast("rem-cart" + ran(), "Item removed from cart!", "danger"); // adding random id to generate more than 1 toasts 
         delete obj[food_id];
     }
@@ -73,7 +72,6 @@ $('.cart-add').on('click', function () {
         $(this).siblings('.cart-qty').removeClass('d-none');
         $(this).addClass('d-none');
         
-        // @ToDo: Add item to cart
         var food_id = $(this).attr('id');
         var cart_cookie = Cookies.get('cart');
         // food_id : count

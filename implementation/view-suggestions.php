@@ -1,7 +1,6 @@
 <?php
 
     require_once 'db/db-connect.php';
-    require 'db/debug-functions.php'; // @ToDO remove
     require 'db/admin-db-functions.php';
     require 'db/db-functions.php';
 
@@ -34,7 +33,6 @@
         }
         else if ( isset($_POST['rating_id']) && $_SESSION['role'] == "ADMIN" )
         {
-            writeC("HERE");
             $rating_id = mysqli_real_escape_string($conn, $_POST['rating_id']);
             $ret = deleteRating($rating_id);
             if($ret)
@@ -113,8 +111,6 @@
                             <a class="nav-link text-white" aria-current="page" href="view-completed-orders.php">View Completed Orders</a>
                             <a class="nav-link active text-white" aria-current="page" href="view-suggestions.php">View Suggestions</a>
                             <a class="nav-link text-white" aria-current="page" href="logout.php">Logout</a>
-                            <!-- @ToDo : add logout button to chef's pages -->
-                            <!-- @ToDo : capitalize l in logout -->
                     <?php
                         }
                     ?>

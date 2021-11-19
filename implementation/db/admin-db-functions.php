@@ -20,11 +20,10 @@ function addChef($email) {
         // store it in DB
         $sql = "INSERT INTO `users` VALUES('" . $email . "','" . $hash . "','CHEF',true);";
         
-        if (mysqli_query($conn, $sql)) {
-            writeC("New record created successfully");                    
+        if (mysqli_query($conn, $sql)) {         
             return $pwd;
         } else {
-            writeC("Error: " . mysqli_error($conn));
+            // writeC("Error: " . mysqli_error($conn));
             // @ToDo : Make a log table entry
             return NULL;
         }        

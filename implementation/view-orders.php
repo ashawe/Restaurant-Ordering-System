@@ -1,7 +1,6 @@
 <?php
 
     require 'db/db-connect.php';
-    require 'db/debug-functions.php';
     require 'db/db-functions.php';
     session_start();
 
@@ -14,7 +13,7 @@
     }
 
     // check if user has access to this page.
-    if( !isset($_SESSION['role']))
+    if( !isset($_SESSION['role']) || $_SESSION['role'] != "ADMIN" && $_SESSION['role'] != "CHEF")
         header('Location: login.php?prompt=please+login+to+continue');
     else if ( isset($_SESSION['reset_required']) )
         header('Location: reset-password.php');
@@ -29,7 +28,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>View Orders</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/main.css">
@@ -49,6 +48,7 @@
                     <a class="nav-link active text-white" aria-current="page" href="view-orders.php">View Orders</a>
                     <a class="nav-link text-white" aria-current="page" href="view-completed-orders.php">View Completed Orders</a>
                     <a class="nav-link text-white" aria-current="page" href="view-suggestions.php">View Suggestions</a>
+                    <a class="nav-link text-white" aria-current="page" href="logout.php">Logout</a>
                 </nav>
             </div>
         </header>

@@ -1,7 +1,6 @@
 <?php
 
     require 'db/db-connect.php';
-    require 'db/debug-functions.php';
     require 'db/db-functions.php';
     session_start();
 

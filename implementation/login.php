@@ -1,6 +1,5 @@
 <?php
     require_once 'db/db-connect.php';
-    require 'db/debug-functions.php'; // @ToDO remove
     require 'db/db-functions.php';
 
     if(isset($_GET['prompt']))
@@ -14,8 +13,8 @@
         $uname = $_POST['username'];
         $pwd = $_POST['password'];
         
-        writeC($uname);
-        writeC($pwd);
+        // writeC($uname);
+        // writeC($pwd);
 
         $ret = checkLogin($uname,$pwd);
         var_dump($ret);
@@ -27,14 +26,14 @@
             session_regenerate_id(true); 
             switch( $ret[0] ) {
                 case "ADMIN": 
-                    writeC("Logged in as admin");
+                    // writeC("Logged in as admin");
                     // set session as ADMIN
                     $_SESSION["role"] = "ADMIN";
                     // redirect to viewing managing chefs
                     $newURL = "add-chef.php";
                     break;
                 case "CHEF":
-                    writeC("Logged in as chef");
+                    // writeC("Logged in as chef");
                     // set session as CHEF
                     $_SESSION["role"] = "CHEF";
                     if($ret[1] == true)
@@ -47,7 +46,7 @@
                     $newURL = "view-orders.php";
                     break;
                 default:
-                    writeC("default");
+                    // writeC("default");
                     // display toast
                     break;
             }

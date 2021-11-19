@@ -1,7 +1,6 @@
 <?php
 
     require_once 'db/db-connect.php';
-    require 'db/debug-functions.php'; // @ToDO remove
     require 'db/admin-db-functions.php';
     require 'db/db-functions.php';
 
@@ -19,7 +18,6 @@
             
             $food_info = getFoodInfo($food_id);
 
-            writeC($food_id);
             $ret = removeFood($food_id);
             if($ret) {
 
@@ -91,6 +89,7 @@
                             </ul>
                         </li>
                     </ul>
+                    <a class="nav-link text-white" aria-current="page" href="logout.php">Logout</a>
                 </nav>
             </div>
         </header>

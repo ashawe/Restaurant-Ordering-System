@@ -1,6 +1,5 @@
 <?php
     require_once 'db/db-connect.php';
-    require 'db/debug-functions.php'; // @ToDO remove
     require 'db/db-functions.php';
     require 'db/validator.php';
 

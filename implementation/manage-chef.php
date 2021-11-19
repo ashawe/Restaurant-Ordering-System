@@ -1,7 +1,6 @@
 <?php
 
     require_once 'db/db-connect.php';
-    require 'db/debug-functions.php'; // @ToDO remove
     require 'db/admin-db-functions.php';
 
     session_start();
@@ -12,23 +11,18 @@
         header('Location: login.php?prompt=please+login+as+admin+to+continue');
     }
 
-    if(isset($_POST['submit']))
+    if(isset($_POST['submit']) )
     {
-        writeC("here");
-        // @ToDo : Apply role check to each POST CALL
         if(isset($_POST['email_id']) && $_SESSION['role'] == "ADMIN")
         {
-            writeC("here2");
             $email_id = mysqli_real_escape_string($conn,$_POST['email_id']);
             $ret = removeChefAccount($email_id);
             if($ret)
             {
-                writeC("here3");
                 $SUCCESS = true;
                 $PRINT_MSG = "Chef removed successfully.";
             }
             else {
-                writeC("here4");
                 $SUCCESS = false;
                 $PRINT_MSG = "Error removing chef.";
             }
@@ -86,6 +80,7 @@
                             </ul>
                         </li>
                     </ul>
+                    <a class="nav-link text-white" aria-current="page" href="logout.php">Logout</a>
                 </nav>
             </div>
         </header>
