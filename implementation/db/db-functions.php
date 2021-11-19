@@ -271,4 +271,17 @@ function getRelatedFood($search_query) {
         return NULL;
 }
 
+function viewCompletedOrders() {
+    Global $conn;
+
+    $sql = "select mapping_id,orders.order_id,order_status,table_number,food.name,order_mapping.quantity from order_mapping,orders,food where order_mapping.order_id = orders.order_id and food.food_id = order_mapping.food_id and orders.order_status = 'COMPLETED' ORDER BY orders.order_id";
+    $userStatement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_execute($userStatement);
+    $resultCompleted = mysqli_stmt_get_result($userStatement);
+
+    if(mysqli_num_rows($resultCompleted) == 0)
+        $resultCompleted = NULL;
+    return $resultCompleted;
+}
+
 ?>
