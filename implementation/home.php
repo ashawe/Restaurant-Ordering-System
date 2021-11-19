@@ -74,7 +74,7 @@
                         <input type="search" name="q" class="form-control" placeholder="Search..." aria-label="Search" value="<?=isset($_GET['q'])? $_GET['q'] : ""?>">
                     </form>
                     <a class="nav-link active text-white" aria-current="page" href="home.php">Order</a>
-                    <a class="nav-link active text-white" aria-current="page" href="cart.php">Cart / View Order</a>
+                    <a class="nav-link text-white" aria-current="page" href="cart.php">Cart / View Order</a>
                 </nav>
             </div>
         </header>

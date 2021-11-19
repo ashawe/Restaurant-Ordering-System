@@ -1,6 +1,5 @@
 <?php
     require_once 'db/db-connect.php';
-    require 'db/debug-functions.php'; // @ToDO remove
     require 'db/admin-db-functions.php';
     
     $PWD = "";
@@ -24,7 +23,6 @@
     if(isset($_POST['chef-mail']))
     {
         $chefMail = $_POST['chef-mail'];
-        writeC($chefMail);
         $ret = addChef($chefMail);
         $PWD = $ret;
         if($ret!=NULL)
@@ -51,7 +49,6 @@
 </head>
 
 <body class="d-flex h-100 bg-dark">
-    <!-- @ToDo: Fix "active" link in navbar -->
     <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header>
             <div class="">
