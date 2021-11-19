@@ -6,7 +6,7 @@
 - Clone the repository in the ```/opt/lampp/htdocs/``` folder on linux or 
 ```C:/program files/xampp/htdocs``` or similar on windows
 - Create a file called CONFIG.php in the ```/opt/lampp/htdocs``` folder with the following contents:
-``
+```
 <?php
 
 	$servername = "localhost";
@@ -15,7 +15,7 @@
 	$dbname = "ros";
 
 ?>
-``
+```
 - goto ```localhost/phpmyadmin```. It should log you in automatically (default username is root and password is <empty>)
 - Create a database named ```ros```
 - Adding tables & Data:
