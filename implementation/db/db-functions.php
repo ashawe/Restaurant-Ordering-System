@@ -264,4 +264,18 @@ function getFoodReviews() {
         return NULL;
 }
 
+function getRelatedFood($search_query) {
+    Global $conn;
+
+    $sql = "SELECT food.food_id,name,price,photo,description,ROUND(AVG(rating),2) as rating FROM `food` LEFT JOIN ratings ON food.food_id = ratings.food_id WHERE name LIKE '%". $search_query ."%' or description LIKE '%". $search_query ."%' GROUP BY food.food_id";
+    writeC($sql);
+    $userStatement = mysqli_prepare($conn, $sql);
+    mysqli_stmt_execute($userStatement);
+    $result = mysqli_stmt_get_result($userStatement);
+    if(mysqli_num_rows($result) > 0)
+        return $result;
+    else 
+        return NULL;
+}
+
 ?>

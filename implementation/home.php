@@ -25,8 +25,15 @@
     if(!$is_logged_in)
         header("Location: index.php?prompt=please provide a table number");
     
-    // fetch food from db
-    $foodArray = getFood();
+    // if searching for something
+    if( isset($_GET['q']) ) {
+        $search_query = mysqli_real_escape_string($conn,$_GET['q']);
+        $foodArray = getRelatedFood($search_query);
+    }
+    else {
+        // fetch food from db
+        $foodArray = getFood();
+    }
 
     if( $foodArray == NULL)
     {
@@ -64,7 +71,7 @@
                 <a href="index.php"><h3 class="float-md-start mb-0 text-white">Restaurant Ordering System</h3></a>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <form method="GET" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                        <input type="search" name="q" class="form-control" placeholder="Search..." aria-label="Search">
+                        <input type="search" name="q" class="form-control" placeholder="Search..." aria-label="Search" value="<?=isset($_GET['q'])? $_GET['q'] : ""?>">
                     </form>
                     <a class="nav-link active text-white" aria-current="page" href="home.php">Order</a>
                     <a class="nav-link active text-white" aria-current="page" href="cart.php">Cart / View Order</a>
@@ -113,7 +120,7 @@
                     }
                     else {
                         if( isset($err) )
-                            echo "$( document ).ready(function(){ generateToast('no-data-toast','" . $err . "','danger')});";
+                            echo "<script>$( document ).ready(function(){ generateToast('no-data-toast','No Data Found','danger')});</script>";
                     }
                 ?>
                 </div>
