@@ -18,7 +18,7 @@
     if( isset($_POST['submit']) )
     {
         // var_dump($_POST);
-        if( isset($_POST['order_id']) ) {
+        if( isset($_POST['order_id']) && $_SESSION['role'] == "ADMIN" ) {
             $order_id = mysqli_real_escape_string($conn, $_POST['order_id']);
             $ret = deleteSuggestion($order_id);
             if($ret)
@@ -32,7 +32,7 @@
                 $PRINT_MSG = "Failed to delete";
             }
         }
-        else if (isset($_POST['rating_id']))
+        else if ( isset($_POST['rating_id']) && $_SESSION['role'] == "ADMIN" )
         {
             writeC("HERE");
             $rating_id = mysqli_real_escape_string($conn, $_POST['rating_id']);
@@ -142,7 +142,14 @@
                                         <form method="POST">
                                             <input type="hidden" name="submit" value="submit">
                                             <input type="hidden" name="order_id" value="<?=$row['order_id']?>">
-                                            <button class="btn btn-danger" type="submit">Delete Suggestion</button>
+                                            <?php
+                                                if($_SESSION['role'] == "ADMIN")
+                                                {
+                                            ?>  
+                                                    <button class="btn btn-danger" type="submit">Delete Suggestion</button>
+                                            <?php
+                                                }
+                                            ?>
                                         </form>
                                     </div>
                                 </div>
@@ -183,7 +190,14 @@
                                                                 <form method="POST">
                                                                     <input type="hidden" name="submit" value="submit">
                                                                     <input type="hidden" name="rating_id" value="<?=$row['rating_id']?>">
-                                                                    <button class="btn btn-danger" type="submit">Delete Item Rating & Review</button> 
+                                                                    <?php
+                                                                        if($_SESSION['role'] == "ADMIN")
+                                                                        {
+                                                                    ?>  
+                                                                            <button class="btn btn-danger" type="submit">Delete Item Rating & Review</button> 
+                                                                    <?php
+                                                                        }
+                                                                    ?>
                                                                 </form>
                                                             </div>
                                                         </div>
