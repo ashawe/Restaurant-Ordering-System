@@ -109,9 +109,6 @@
             <div class="">
                 <a href="index.php"><h3 class="float-md-start mb-0 text-white">Restaurant Ordering System</h3></a>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <form method="GET" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                        <input type="search" name="q" class="form-control" placeholder="Search..." aria-label="Search">
-                    </form>
                     <a class="nav-link text-white" aria-current="page" href="home.php">Order</a>
                     <a class="nav-link active text-white" aria-current="page" href="cart.php">Cart / View Order</a>
                 </nav>
