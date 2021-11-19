@@ -61,6 +61,7 @@
                 if($order_id == NULL) {
                     $SUCCESS = false;
                     $PRINT_MSG = "ERROR checking out.";
+                    writeToLog("Order not placed. Error: " . mysqli_error($conn));
                 }
                 else {
                     $SUCCESS = true;

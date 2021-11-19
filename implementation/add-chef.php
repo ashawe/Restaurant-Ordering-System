@@ -26,7 +26,12 @@
         $ret = addChef($chefMail);
         $PWD = $ret;
         if($ret!=NULL)
+        {
             $SUCCESS = true;
+            writeToLog("Admin added chef:" . $chefMail);
+        }
+        else
+            writeToLog("Chef could not be added. Error: " . mysqli_error($conn));
     }
 
 ?>

@@ -35,6 +35,7 @@
             else {
                 $SUCCESS = false;
                 $PRINT_MSG = "Failed to remove";
+                writeToLog("Food could not be added. Error: " . mysqli_error($conn));
             }
         }
     }

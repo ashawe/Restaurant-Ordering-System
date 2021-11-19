@@ -39,6 +39,7 @@
         else {
             $SUCCESS = false;
             $PRINT_STATUS = $validationResult;
+            writeToLog("Password not reset. " . $PRINT_STATUS .". Error: " . mysqli_error($conn));
         }
 
     }

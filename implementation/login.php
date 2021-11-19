@@ -31,6 +31,7 @@
                     $_SESSION["role"] = "ADMIN";
                     // redirect to viewing managing chefs
                     $newURL = "add-chef.php";
+                    writeToLog("Admin Logged in");
                     break;
                 case "CHEF":
                     // writeC("Logged in as chef");
@@ -44,6 +45,7 @@
                     }
                     // redirect to viewing orders
                     $newURL = "view-orders.php";
+                    writeToLog("Chef Logged in: " . $uname);
                     break;
                 default:
                     // writeC("default");

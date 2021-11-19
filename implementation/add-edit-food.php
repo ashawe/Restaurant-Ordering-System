@@ -98,6 +98,7 @@
                 $SUCCESS = true;
             } else {
                 // @ToDo : Write to log
+                writeToLog("Food could not be added. Error: " . mysqli_error($conn));
                 $PRINT_MSG = "There was some error. Please try again later";
                 // writeC("Error: ". $ret . mysqli_error($conn));
                 $SUCCESS = false;

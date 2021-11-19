@@ -29,6 +29,7 @@
             {
                 $SUCCESS = false;
                 $PRINT_MSG = "Failed to delete";
+                writeToLog("Failed to delete suggestion. Error: " . mysqli_error($conn));
             }
         }
         else if ( isset($_POST['rating_id']) && $_SESSION['role'] == "ADMIN" )
@@ -44,6 +45,7 @@
             {
                 $SUCCESS = false;
                 $PRINT_MSG = "Failed to delete";
+                writeToLog("Failed to delete review. Error: " . mysqli_error($conn));
             }
         }
     }

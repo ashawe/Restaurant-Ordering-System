@@ -25,6 +25,7 @@
             else {
                 $SUCCESS = false;
                 $PRINT_MSG = "Error removing chef.";
+                writeToLog("Chef could not be removed. Error: " . mysqli_error($conn));
             }
         }
     }

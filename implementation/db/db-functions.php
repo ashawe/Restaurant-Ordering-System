@@ -284,4 +284,15 @@ function viewCompletedOrders() {
     return $resultCompleted;
 }
 
+function writeToLog($message) {
+    Global $conn;
+
+    $message = mysqli_real_escape_string($conn,$message);
+    
+    $sql = "INSERT INTO logs(description) VALUES(?)";
+    $stmt = mysqli_prepare($conn,$sql);
+    mysqli_stmt_bind_param($stmt,'s',$message);
+    mysqli_stmt_execute($stmt);
+}
+
 ?>

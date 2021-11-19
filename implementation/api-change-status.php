@@ -11,7 +11,10 @@
         if($result)
             echo "1";
         else
-            echo "Error";
+            {
+                echo "Error";
+                writeToLog("Order status change failed. Error: " . mysqli_error($conn));
+            }
     }
     else {
         echo "INVALID REQUEST";
